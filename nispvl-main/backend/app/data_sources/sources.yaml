@@ -1,0 +1,218 @@
+# Реестр источников данных и их ограничений.
+# Показывается на странице «Методика и источники» и в подсказках интерфейса.
+# Поле `checked` — что именно и когда было проверено при разработке (ноябрь 2026 г.).
+# Тексты двуязычные: ru / kk (казахский требует вычитки носителем языка).
+
+power:
+  title: NASA POWER (Daily API)
+  provider: NASA Langley Research Center, проект POWER
+  url: https://power.larc.nasa.gov/docs/services/api/temporal/daily/
+  used_for:
+    ru: "Осадки и температура воздуха с 1981 года; запасной показатель увлажнения почвы; ветер и снег для «Часов голой почвы»."
+    kk: "1981 жылдан бергі жауын-шашын мен ауа температурасы; топырақ ылғалдылығының қосалқы көрсеткіші; «Ашық топырақ сағаты» үшін жел мен қар."
+    en: "Precipitation and air temperature since 1981; fallback indicator of soil wetness; wind and snow for the Bare Soil Clock."
+  provenance:
+    ru: "Это не измерения на поле и не прямые спутниковые снимки, а реанализ — расчёт глобальной модели атмосферы MERRA-2 (свежие дни — GEOS-IT), в которую усвоены спутниковые и наземные наблюдения. PRECTOTCORR — осадки модели с поправкой по наблюдениям."
+    kk: "Бұл егістіктегі өлшеу де, тікелей спутниктік түсірілім де емес, реанализ — спутниктік және жерүсті бақылаулары енгізілген MERRA-2 жаһандық атмосфера моделінің есебі (соңғы күндер — GEOS-IT). PRECTOTCORR — бақылаулар бойынша түзетілген модельдік жауын-шашын."
+    en: "Not field measurements and not direct satellite images but a reanalysis: output of the MERRA-2 global atmospheric model (recent days: GEOS-IT) that assimilates satellite and ground observations. PRECTOTCORR is model precipitation bias-corrected with observations."
+  spatial_resolution:
+    ru: "Ячейка примерно 0,5° x 0,625° (около 55 x 43 км на широте 52°). Все поля внутри одной ячейки получают одинаковые значения."
+    kk: "Ұяшық шамамен 0,5° x 0,625° (52° ендікте шамамен 55 x 43 км). Бір ұяшықтағы барлық егістік бірдей мән алады."
+    en: "Grid cell of about 0.5° x 0.625° (roughly 55 x 43 km at 52° N). All fields inside one cell receive the same values."
+  resolution_m: 50000
+  temporal_coverage:
+    ru: "С 1 января 1981 года по настоящее время, шаг — сутки. Задержка последних данных — несколько дней."
+    kk: "1981 жылғы 1 қаңтардан қазіргі уақытқа дейін, қадамы — тәулік. Соңғы деректердің кешігуі — бірнеше күн."
+    en: "1 January 1981 to the present, daily. Latest data lag by a few days."
+  access:
+    ru: "Без ключа и регистрации. Не более 20 параметров в запросе; документация просит не запрашивать одну и ту же ячейку многократно, поэтому ответы кэшируются."
+    kk: "Кілтсіз және тіркеусіз. Бір сұрауда 20 параметрден аспайды; құжаттама бір ұяшықты қайта-қайта сұрамауды өтінеді, сондықтан жауаптар кэштеледі."
+    en: "No key or registration. Up to 20 parameters per request; the documentation asks not to request the same cell repeatedly, so responses are cached."
+  limitations:
+    ru: "Летние ливни в степи локальны, а ячейка усредняет их по площади ~2 000 км², поэтому осадки на конкретном поле могут заметно отличаться. Данные ближайшей метеостанции точнее."
+    kk: "Далада жазғы нөсер жергілікті сипатта болады, ал ұяшық оларды ~2 000 км² аумақта орташалайды, сондықтан нақты егістіктегі жауын-шашын айтарлықтай өзгеше болуы мүмкін. Жақын метеостанция деректері дәлірек."
+    en: "Summer showers in the steppe are local, while the cell averages them over ~2,000 km², so rainfall on a particular field can differ noticeably. Data from the nearest weather station are more accurate."
+  # Ряды, которые запрашиваются (data_sources/power.py, PARAMETERS). Все — значения ячейки MERRA-2
+  # ~0,5° x 0,625° (реанализ), а не наблюдения на поле.
+  variables:
+    PRECTOTCORR: {unit: "мм/сут", note: "осадки модели с поправкой по наблюдениям"}
+    T2M: {unit: "°C", note: "температура воздуха на 2 м, среднее за сутки"}
+    T2M_MAX: {unit: "°C", note: "максимум за сутки"}
+    T2M_MIN: {unit: "°C", note: "минимум за сутки; по нему считаются заморозки (окна покровных культур)"}
+    GWETROOT: {unit: "0–1", note: "влажность корнеобитаемого слоя модели, доля насыщения"}
+    GWETTOP: {unit: "0–1", note: "влажность верхних ~5 см модели, доля насыщения пор; не равна объёмной влажности SMAP (м³/м³)"}
+    WS2M: {unit: "м/с", note: "средняя за сутки скорость ветра на 2 м; справочно"}
+    WS10M: {unit: "м/с", note: "средняя за сутки скорость ветра на 10 м; справочно, для сравнения со станциями"}
+    WS2M_MAX: {unit: "м/с", note: "максимальная часовая скорость ветра за сутки на 2 м — по ней считаются дни с эрозионным ветром (rules/erosion.yaml)"}
+    WS10M_MAX: {unit: "м/с", note: "максимальная часовая скорость ветра за сутки на 10 м; справочно (флюгер станций 10–15 м)"}
+    FRSNO: {unit: "0–1", note: "доля суши ячейки под снегом"}
+    SNODP: {unit: "см", note: "высота снега в заснеженной части ячейки MERRA-2 (не средняя по ячейке), поэтому применяется только вместе с FRSNO"}
+  wind_snow_limitations:
+    ru: "Ветер и снег — тоже реанализ на ячейке ~0,5° x 0,625°: местные порывы, рельеф и лесополосы сглажены, максимум за сутки — по часовым значениям модели, а не порыв на флюгере. Снег модели не видит перенос снега ветром с поля."
+    kk: "Жел мен қар да ~0,5° x 0,625° ұяшықтағы реанализ: жергілікті екпін, бедер және орман жолақтары тегістелген, тәуліктік максимум — модельдің сағаттық мәндері бойынша, флюгердегі екпін емес. Модель қардың желмен егістіктен ұшырылуын көрмейді."
+    en: "Wind and snow are also reanalysis values for a ~0.5° x 0.625° cell: local gusts, terrain and shelterbelts are smoothed out; the daily maximum is the highest hourly model value, not a gust at a wind vane. The model does not see snow blown off the field."
+  checked: "Живой запрос 12.11.2026: API v2.10.3, ряд 1981-01-01 … 2026-11-09 (16 750 суток), ответ ~2 с, пропуски = -999. 14.11.2026: WS2M, WS10M, WS2M_MAX, WS10M_MAX, FRSNO, SNODP отдаются в community AG, daily (API v2.10.3), всего 12 параметров в запросе (лимит 20)."
+  status: active
+
+modis:
+  title: MODIS MOD13Q1 v6.1 NDVI (ORNL DAAC TESViS)
+  provider: NASA LP DAAC (продукт), ORNL DAAC (сервис вырезок)
+  url: https://modis.ornl.gov/data/modis_webservice.html
+  doi: https://doi.org/10.5067/MODIS/MOD13Q1.061
+  used_for:
+    ru: "Индекс растительности NDVI по полю с 2000 года, тренд и пиксельный слой карты."
+    kk: "2000 жылдан бергі егістік бойынша NDVI өсімдік индексі, тренд және картаның пиксельдік қабаты."
+    en: "NDVI vegetation index for the field since 2000, its trend and a pixel map layer."
+  provenance:
+    ru: "Спутниковые измерения прибора MODIS (спутник Terra). Каждое значение — лучший (малооблачный) пиксель за 16 дней."
+    kk: "MODIS аспабының (Terra спутнигі) спутниктік өлшеулері. Әр мән — 16 күндегі ең жақсы (бұлты аз) пиксель."
+    en: "Satellite measurements by the MODIS instrument (Terra satellite). Each value is the best (least cloudy) pixel over 16 days."
+  spatial_resolution:
+    ru: "Пиксель номинально 250 м (фактически ~232 м, ≈ 5,4 га). На поле 400 га попадает около 75 пикселей; поля меньше ~20 га оцениваются по 1–3 пикселям и захватывают соседние участки."
+    kk: "Пиксель атаулы 250 м (іс жүзінде ~232 м, ≈ 5,4 га). 400 га егістікке шамамен 75 пиксель келеді; ~20 га-дан кіші егістік 1–3 пиксельмен бағаланады және көрші телімдерді қамтиды."
+    en: "Nominal 250 m pixel (actually ~232 m, ≈ 5.4 ha). A 400 ha field contains about 75 pixels; fields smaller than ~20 ha are represented by 1–3 pixels that also cover neighbouring land."
+  resolution_m: 250
+  temporal_coverage:
+    ru: "С 18 февраля 2000 года по настоящее время, один композит раз в 16 дней. Мы берём 10 композитов сезона (с ~9 мая по ~30 сентября), а для «Часов голой почвы» — ещё 5 композитов весны и осени (DOY 81–113 и 289–305, ~22 марта – 8 мая и ~16 октября – 16 ноября)."
+    kk: "2000 жылғы 18 ақпаннан қазіргі уақытқа дейін, 16 күнде бір композит. Біз маусымның 10 композитін аламыз (~9 мамырдан ~30 қыркүйекке дейін), ал «Ашық топырақ сағаты» үшін — көктем мен күздің тағы 5 композитін (DOY 81–113 және 289–305)."
+    en: "18 February 2000 to the present, one composite every 16 days. We use 10 composites per season (~9 May to ~30 September) and, for the Bare Soil Clock, 5 more spring and autumn composites (DOY 81–113 and 289–305, ~22 March to 8 May and ~16 October to 16 November)."
+  access:
+    ru: "Без ключа. Не более 10 дат на запрос и окно до 100 км; один запрос выполняется 30–50 секунд, поэтому полный ряд нового поля загружается несколько минут (в фоне, затем из кэша)."
+    kk: "Кілтсіз. Бір сұрауда 10 күннен аспайды, терезе 100 км-ге дейін; бір сұрау 30–50 секунд орындалады, сондықтан жаңа егістіктің толық қатары бірнеше минут жүктеледі (фонда, кейін кэштен)."
+    en: "No key. Up to 10 dates per request and a window of up to 100 km; one request takes 30–50 seconds, so the full series for a new field loads in a few minutes (in the background, then from cache)."
+  limitations:
+    ru: "NDVI показывает зелёную массу, а не урожай и не культуру. Облака и снег отсекаются маской качества (pixel_reliability 0–1). Сертификат сайта выпущен в цепочке emSign — нужен свежий набор корневых сертификатов (certifi ≥ 2026.10.23)."
+    kk: "NDVI өнімді де, дақыл түрін де емес, жасыл массаны көрсетеді. Бұлт пен қар сапа маскасымен алынып тасталады (pixel_reliability 0–1). Сайт сертификаты emSign тізбегінде шығарылған — жаңа түбірлік сертификаттар жинағы қажет (certifi ≥ 2026.10.23)."
+    en: "NDVI shows green biomass, not yield and not the crop type. Clouds and snow are removed with the quality mask (pixel_reliability 0–1). The site certificate chains to emSign, which requires an up-to-date root bundle (certifi ≥ 2026.10.23)."
+  checked: "Живые запросы 12.11.2026: 614 дат (2000-02-18 … 2026-10-16); 11 дат в запросе → HTTP 400 «exceeds maximum subset tiles support of 10»; 8 параллельных запросов ≈ 50 с."
+  status: active
+
+soilgrids:
+  title: ISRIC SoilGrids 2.0 (REST API)
+  provider: ISRIC — World Soil Information
+  url: https://rest.isric.org/soilgrids/v2.0/docs
+  used_for:
+    ru: "Органический углерод, глина, песок и pH по слоям до 1 м. По ним считается влагоёмкость почвы."
+    kk: "1 м-ге дейінгі қабаттар бойынша органикалық көміртек, саз, құм және pH. Олар арқылы топырақтың ылғал сыйымдылығы есептеледі."
+    en: "Organic carbon, clay, sand and pH by layer down to 1 m. Soil water holding capacity is derived from them."
+  provenance:
+    ru: "Это не анализ почвы вашего поля, а глобальная карта-прогноз — модель машинного обучения, обученная на почвенных разрезах со всего мира и спутниковых и климатических слоях."
+    kk: "Бұл сіздің егістігіңіздің топырақ талдауы емес, жаһандық болжам-карта — дүниежүзілік топырақ кескіндері мен спутниктік және климаттық қабаттарда оқытылған машиналық оқыту моделі."
+    en: "Not a soil analysis of your field but a global predicted map: a machine-learning model trained on soil profiles worldwide and satellite and climate layers."
+  spatial_resolution:
+    ru: "Сетка 250 м, но реальная детальность ниже: в Северном Казахстане мало опорных разрезов. Берётся одна точка — центр поля."
+    kk: "Тор 250 м, бірақ нақты дәлдігі төмен: Солтүстік Қазақстанда тірек кескіндер аз. Бір нүкте — егістік ортасы алынады."
+    en: "250 m grid, but the real detail is lower: there are few reference profiles in Northern Kazakhstan. One point is used — the field centre."
+  resolution_m: 250
+  temporal_coverage:
+    ru: "Статичная карта (один срез, без рядов по годам). Изменение гумуса во времени по ней увидеть нельзя."
+    kk: "Статикалық карта (бір кесінді, жылдар бойынша қатарсыз). Гумустың уақыт бойынша өзгеруін одан көру мүмкін емес."
+    en: "Static map (one snapshot, no yearly series). Humus change over time cannot be seen from it."
+  access:
+    ru: "Без ключа, сервис в статусе бета. Ответ занимает 10–30 секунд и периодически недоступен — тогда показываются сохранённые значения с предупреждением."
+    kk: "Кілтсіз, сервис бета күйінде. Жауап 10–30 секунд алады және кейде қолжетімсіз — мұндайда ескертумен сақталған мәндер көрсетіледі."
+    en: "No key; the service is in beta. Responses take 10–30 seconds and it is periodically unavailable — then stored values are shown with a warning."
+  limitations:
+    ru: "Для решений о внесении удобрений нужен агрохимический анализ почвы. Вместе со средним значением показываем интервал 5–95 % модели."
+    kk: "Тыңайтқыш енгізу туралы шешім үшін топырақтың агрохимиялық талдауы қажет. Орташа мәнмен бірге модельдің 5–95 % аралығын көрсетеміз."
+    en: "Fertiliser decisions require a laboratory soil analysis. The model 5–95 % interval is shown together with the mean."
+  checked: "Живой запрос 12.11.2026: ответ 200 за 22 с; повторный запрос к openapi.json — тайм-аут 40 с (нестабильность подтверждена)."
+  status: active
+
+smap:
+  title: SMAP SPL3SMP_E v006 soil moisture
+  provider: NASA NSIDC DAAC
+  url: https://nsidc.org/data/spl3smp_e/versions/6
+  doi: https://doi.org/10.5067/M20OXIZHY3RJ
+  used_for:
+    ru: "Влажность верхнего слоя почвы в апреле–мае (перед посевом) по годам и слой карты; суточная влажность апреля–октября для «Часов голой почвы»."
+    kk: "Жылдар бойынша сәуір–мамырдағы (егіс алдындағы) топырақтың беткі қабатының ылғалдылығы және карта қабаты; «Ашық топырақ сағаты» үшін сәуір–қазанның тәуліктік ылғалдылығы."
+    en: "Topsoil moisture in April–May (before sowing) by year, and a map layer; daily April–October moisture for the Bare Soil Clock."
+  provenance:
+    ru: "Спутниковые измерения микроволнового радиометра SMAP, пересчитанные в объёмную влажность почвы. Чувствует только верхние ~5 см."
+    kk: "SMAP микротолқынды радиометрінің топырақтың көлемдік ылғалдылығына қайта есептелген спутниктік өлшеулері. Тек үстіңгі ~5 см қабатты сезеді."
+    en: "Satellite measurements by the SMAP microwave radiometer converted to volumetric soil moisture. It senses only the top ~5 cm."
+  spatial_resolution:
+    ru: "Данные усреднены по ячейке ~9 км (≈ 8 100 га; на широте 52° ячейка вытянута: примерно 6 x 13 км). Это шаг сетки; сам радиометр видит пятно около 33–40 км, так что реальная детальность ещё грубее. Поле целиком лежит внутри одной ячейки вместе с соседними полями, лесополосами и водоёмами."
+    kk: "Деректер ~9 км ұяшық бойынша орташаланған (≈ 8 100 га; 52° ендікте ұяшық созылыңқы: шамамен 6 x 13 км). Бұл тор қадамы; радиометрдің өзі шамамен 33–40 км дақты көреді, сондықтан нақты дәлдік одан да дөрекі. Егістік көрші егістіктермен, орман жолақтарымен және су айдындарымен бірге бір ұяшықтың ішінде жатады."
+    en: "Values are averaged over a ~9 km cell (≈ 8,100 ha; at 52° N the cell is elongated, about 6 x 13 km). That is the grid spacing; the radiometer footprint is about 33–40 km, so the real detail is coarser still. A field lies entirely inside one cell together with neighbouring fields, shelterbelts and water bodies."
+  resolution_m: 9000
+  temporal_coverage:
+    ru: "С 31 марта 2015 года, ежедневно; пролёт над одной точкой — раз в 2–3 дня. До 2015 года данных нет, поэтому засухи 2010 и 2012 годов в этом ряду отсутствуют."
+    kk: "2015 жылғы 31 наурыздан, күн сайын; бір нүктенің үстінен 2–3 күнде бір ұшып өтеді. 2015 жылға дейін дерек жоқ, сондықтан 2010 және 2012 жылдардағы құрғақшылық бұл қатарда жоқ."
+    en: "Since 31 March 2015, daily; a given point is overpassed every 2–3 days. There are no data before 2015, so the 2010 and 2012 droughts are absent from this series."
+  access:
+    ru: "Нужен бесплатный аккаунт NASA Earthdata. Суточный файл весит ~650 МБ, поэтому берём только окно 3x3 ячейки через OPeNDAP (~3 с на день, ряд нового поля — несколько минут в фоне)."
+    kk: "NASA Earthdata тегін аккаунты қажет. Тәуліктік файл ~650 МБ, сондықтан OPeNDAP арқылы тек 3x3 ұяшық терезесін аламыз (күніне ~3 с, жаңа егістік қатары — фонда бірнеше минут)."
+    en: "Requires a free NASA Earthdata account. A daily file is ~650 MB, so only a 3x3-cell window is read via OPeNDAP (~3 s per day; a new field series takes a few minutes in the background)."
+  limitations:
+    ru: "Мёрзлая почва и снег не измеряются (в начале апреля данных обычно нет). Поверхностные 5 см не равны запасу влаги в метровом слое — мы используем их как показатель степени увлажнения профиля, и это допущение."
+    kk: "Тоң топырақ пен қар өлшенбейді (сәуірдің басында дерек әдетте жоқ). Беткі 5 см метрлік қабаттағы ылғал қорына тең емес — біз оны кескіннің ылғалдану дәрежесінің көрсеткіші ретінде қолданамыз, бұл — болжам."
+    en: "Frozen soil and snow are not measured (data are usually missing in early April). The top 5 cm are not the same as the water stored in the 1 m layer — we use them as an indicator of profile wetness, which is an assumption."
+  checked: "CMR 12.11.2026: коллекция C2938664763-NSIDC_CPRD, начало 2015-03-31, последняя гранула 2026-11-10. OPeNDAP-вырезка 3x3 — HTTP 200 за 3 с."
+  status: active
+
+gpm:
+  title: GPM IMERG Final v07 precipitation
+  provider: NASA GES DISC
+  url: https://gpm.nasa.gov/data/imerg
+  doi: https://doi.org/10.5067/GPM/IMERGDF/DAY/07
+  used_for:
+    ru: "Более детальные осадки (0,1°) для сверки с NASA POWER. Пока не активно: во всех расчётах используется NASA POWER."
+    kk: "NASA POWER деректерін тексеруге арналған егжей-тегжейлі жауын-шашын (0,1°). Әзірге белсенді емес: барлық есепте NASA POWER қолданылады."
+    en: "Finer-resolution precipitation (0.1°) to cross-check NASA POWER. Not active yet: NASA POWER is used in all calculations."
+  provenance:
+    ru: "Объединение микроволновых и инфракрасных наблюдений группировки спутников, откалиброванное по наземным осадкомерам (версия Final)."
+    kk: "Спутниктер тобының микротолқынды және инфрақызыл бақылауларының жерүсті жауын өлшегіштері бойынша калибрленген бірлестігі (Final нұсқасы)."
+    en: "Merged microwave and infrared observations from a satellite constellation, calibrated to rain gauges (Final run)."
+  spatial_resolution:
+    ru: "Ячейка 0,1° (около 11 x 7 км на широте 52°)."
+    kk: "Ұяшық 0,1° (52° ендікте шамамен 11 x 7 км)."
+    en: "0.1° cell (about 11 x 7 km at 52° N)."
+  resolution_m: 10000
+  temporal_coverage:
+    ru: "По каталогу CMR суточный продукт Final v07 охватывает 1998-01-01 … 2025-09-30; задержка версии Final — около 3,5 месяца. Точность ниже над снегом и мёрзлой поверхностью."
+    kk: "CMR каталогы бойынша Final v07 тәуліктік өнімі 1998-01-01 … 2025-09-30 аралығын қамтиды; Final нұсқасының кешігуі — шамамен 3,5 ай. Қар мен тоң бетінде дәлдігі төмен."
+    en: "According to CMR, the Final v07 daily and monthly products cover 1998-01-01 … 2025-09-30; the Final run lags by about 3.5 months. Accuracy is lower over snow and frozen ground."
+  access:
+    ru: "Нужен аккаунт NASA Earthdata, в профиле которого одобрено приложение «NASA GESDISC DATA ARCHIVE»."
+    kk: "Профилінде «NASA GESDISC DATA ARCHIVE» қосымшасы мақұлданған NASA Earthdata аккаунты қажет."
+    en: "Requires a NASA Earthdata account with the \"NASA GESDISC DATA ARCHIVE\" application approved in the Earthdata profile."
+  limitations:
+    ru: "Проверено 13.11.2026: месячные файлы IMERG есть в CMR, их метаданные читаются через облачный OPeNDAP, но чтение данных отклоняется (HTTP 403 от GES DISC), пока для аккаунта не одобрено приложение GES DISC. До этого источник не подключён."
+    kk: "13.11.2026 тексерілді: IMERG айлық файлдары CMR-де бар, метадеректері бұлттық OPeNDAP арқылы оқылады, бірақ аккаунт үшін GES DISC қосымшасы мақұлданбайынша деректерді оқу қабылданбайды (GES DISC-тен HTTP 403). Оған дейін дереккөз қосылмаған."
+    en: "Checked on 13.11.2026: IMERG monthly files are listed in CMR and their metadata are readable via cloud OPeNDAP, but data reads are refused (HTTP 403 from GES DISC) until the GES DISC application is approved for the account. Not integrated until then."
+  checked: "13.11.2026: CMR — коллекции GPM_3IMERGDF (C2723754864-GES_DISC) и GPM_3IMERGM (C2723754851-GES_DISC); метаданные (.dmr) месячного файла читаются через облачный OPeNDAP, чтение данных — HTTP 403 от data.gesdisc.earthdata.nasa.gov (не одобрено приложение GES DISC в профиле Earthdata)."
+  status: planned
+
+landsat:
+  title: Landsat Collection 2 Level-2 (30 m)
+  provider: USGS / NASA; доступ через Microsoft Planetary Computer STAC
+  url: https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
+  used_for:
+    ru: "Детальный NDVI (30 м) для ретро-проверки на небольших полях. В MVP не подключено — используется MODIS."
+    kk: "Шағын егістіктердегі ретро-тексеруге арналған егжей-тегжейлі NDVI (30 м). MVP-де қосылмаған — MODIS қолданылады."
+    en: "Detailed NDVI (30 m) for small fields. Not integrated: MODIS is used."
+  provenance:
+    ru: "Спутниковые снимки Landsat 4–9 после атмосферной коррекции (отражательная способность поверхности)."
+    kk: "Атмосфералық түзетуден кейінгі Landsat 4–9 спутниктік түсірілімдері (беттің шағылыстыру қабілеті)."
+    en: "Landsat 4–9 imagery after atmospheric correction (surface reflectance)."
+  spatial_resolution:
+    ru: "Пиксель 30 м (0,09 га)."
+    kk: "Пиксель 30 м (0,09 га)."
+    en: "30 m pixel (0.09 ha)."
+  resolution_m: 30
+  temporal_coverage:
+    ru: "С 22 августа 1982 года; повтор съёмки 16 дней на спутник (8 дней при двух спутниках). Из-за облаков за сезон бывает всего несколько чистых снимков."
+    kk: "1982 жылғы 22 тамыздан; түсірілім бір спутникке 16 күнде қайталанады (екі спутникпен 8 күн). Бұлттың салдарынан маусымда небәрі бірнеше таза түсірілім болады."
+    en: "Since 22 August 1982; 16-day revisit per satellite (8 days with two satellites). Because of clouds, a season may have only a few clear scenes."
+  access:
+    ru: "Чтение без ключа; ссылки на файлы нужно подписывать через API Planetary Computer."
+    kk: "Кілтсіз оқу; файл сілтемелеріне Planetary Computer API арқылы қол қою қажет."
+    en: "Read without a key; file links must be signed through the Planetary Computer API."
+  limitations:
+    ru: "Модуль-заготовка `data_sources/landsat.py` описывает, как подключить источник без изменения остального кода."
+    kk: "`data_sources/landsat.py` дайындама модулі дереккөзді қалған кодты өзгертпей қалай қосуға болатынын сипаттайды."
+    en: "The placeholder module data_sources/landsat.py describes how to connect the source without changing the rest of the code."
+  checked: "Только метаданные STAC 12.11.2026 (коллекция landsat-c2-l2, GSD 30 м). Данные не запрашивались."
+  status: planned

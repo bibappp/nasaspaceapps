@@ -1,0 +1,53 @@
+{
+  "_comment": "EXAMPLE ONLY. Values are illustrative, not real results. Shape of GET /api/fields/{id}/bare-soil?start_year=&end_year=. Changes must be additive (new optional fields only).",
+  "field_id": 1,
+  "period": { "start_year": 2015, "end_year": 2026 },
+  "status": "partial",
+  "jobs": [
+    { "source": "modis_shoulder", "status": "pending", "job": { "id": "job_abc123", "kind": "modis_shoulder", "status": "running", "done": 3, "total": 12, "error": null } }
+  ],
+  "headline": { "top_months": [4, 9], "max_median_exposure": 0.31 },
+  "definition": {
+    "exposure": { "ru": "Доля дней месяца, когда одновременно: нет зелёного покрова (открытая почва или стерня), ветер эрозионный и верхний слой сухой. Если стерня оставлена стоять, это верхняя оценка риска.", "kk": "Айдағы күндердің үлесі: бір күнде жасыл жамылғы жоқ (ашық топырақ немесе аңыз), жел эрозиялық және беткі қабат құрғақ. Аңыз тік қалдырылса, бұл тәуекелдің жоғарғы бағасы (ана тілінде тексеру қажет).", "en": "Share of days in the month with no green cover (bare soil or stubble) AND erosive wind AND dry topsoil on the same day. Where stubble is left standing, this is an upper bound on the risk." }
+  },
+  "thresholds": [
+    { "id": "ndvi_bare", "value": 0.2, "unit": "NDVI", "source": "example_source", "status": "assumption", "evidence": "preliminary", "note": "Example threshold; real value and citation come from rules/erosion.yaml" },
+    { "id": "erosive_wind_ms", "value": 6.0, "unit": "m/s at 10 m", "source": "example_source", "status": "assumption", "evidence": "preliminary", "note": "Example threshold" },
+    { "id": "dry_topsoil", "value": 0.15, "unit": "m3/m3 (SMAP) or GWETTOP fraction", "source": "example_source", "status": "assumption", "evidence": "preliminary", "note": "Example threshold" }
+  ],
+  "effective_thresholds": { "ndvi_max": 0.3, "ndvi_field_quantile": 0.5, "wind_parameter": "WS2M_MAX", "wind_ms": 5.0, "smap_m3m3": 0.2, "smap_basis": "wilting_point_0_5cm", "gwettop": 0.75, "gwettop_basis": "cdf_match", "gwettop_pairs": 500, "last_frost_spring": "05-10", "first_frost_autumn": "09-28", "frost_years": 11, "harvest_end": "10-01" },
+  "years": [
+    {
+      "year": 2025,
+      "months": [
+        { "month": 1, "state": "snow", "bare_days": null, "erosive_wind_days": 8, "dry_days": null, "joint_days": null, "days_in_month": 31, "known_days": 31, "exposure": null, "moisture_source": null, "quality": "ok", "missing_reason": null },
+        { "month": 4, "state": "ok", "bare_days": 26, "erosive_wind_days": 11, "dry_days": 14, "joint_days": 7, "days_in_month": 30, "known_days": 24, "exposure": 0.29, "moisture_source": "smap", "quality": "partial", "missing_reason": null },
+        { "month": 7, "state": "ok", "bare_days": 0, "erosive_wind_days": 6, "dry_days": 20, "joint_days": 0, "days_in_month": 31, "known_days": 31, "exposure": 0.0, "moisture_source": "smap", "quality": "ok", "missing_reason": null },
+        { "month": 9, "state": "ok", "bare_days": 24, "erosive_wind_days": 10, "dry_days": 17, "joint_days": 9, "days_in_month": 30, "known_days": 30, "exposure": 0.3, "moisture_source": "power_gwettop", "quality": "partial", "missing_reason": null },
+        { "month": 11, "state": "missing", "bare_days": null, "erosive_wind_days": 9, "dry_days": null, "joint_days": null, "days_in_month": 30, "known_days": 4, "exposure": null, "moisture_source": null, "quality": "missing", "missing_reason": "ndvi_pending_fetch" }
+      ]
+    }
+  ],
+  "climatology": [
+    { "month": 4, "exposure_median": 0.21, "exposure_p90": 0.34, "n_years": 11 },
+    { "month": 9, "exposure_median": 0.31, "exposure_p90": 0.45, "n_years": 11 }
+  ],
+  "cover_crop_windows": [],
+  "cover_crop_note": {
+    "reason": "frost_before_establishment",
+    "basis": { "ru": "Опасные месяцы до окончания уборки (01.10): май (0,29), сентябрь (0,23) — в это время поле занято основной культурой (сев–уборка), покровную культуру не сеют. После уборки доля опасных дней высокая: октябрь–ноябрь (0,47), но первый заморозок наступает раньше, чем покровная культура успела бы взойти: медиана первого осеннего заморозка (28.09) приходится ещё до окончания уборки (01.10), а нужно не меньше 30 дн. без заморозка.", "kk": "Егін жинаудан кейін үсік ерте түседі (ана тілінде тексеру қажет).", "en": "Risky months before the end of harvest (01 Oct): May (0.29), September (0.23) — the field is under the main crop (sowing to harvest), so no cover crop is sown then. After harvest the share of risky days is high in October–November (0.47), but the first frost comes before a cover crop could establish: the median first autumn frost (28 Sep) comes before the end of harvest (01 Oct), while at least 30 frost-free days are needed." },
+    "advice": { "ru": "Общая рекомендация, не для конкретного поля: оставьте стоящую стерню и не пашите осенью — стоящие растительные остатки сильно снижают ветровую эрозию (Bilbro & Fryrear, 1994).", "kk": "Жалпы ұсыныс, нақты алқапқа арналмаған (ана тілінде тексеру қажет).", "en": "General guidance, not a field-specific recommendation: leave standing stubble and avoid autumn ploughing — standing residue strongly reduces wind erosion (Bilbro & Fryrear, 1994)." },
+    "advice_scope": "general_guidance",
+    "advice_source": { "id": "bilbro_fryrear_1994", "name": "Bilbro J.D., Fryrear D.W. Wind erosion losses as related to plant silhouette and soil cover. Agronomy Journal, 1994", "url": "https://data.zhenzhi.com/details/1/985671799", "note": "Проверено только по выдержке, полный текст не прочитан; DOI не найден" },
+    "needs_review": ["kk"]
+  },
+  "sources": [
+    { "id": "modis", "title": "MODIS MOD13Q1 v6.1 NDVI", "resolution_m": 232, "origin": "live", "spatial_resolution": { "ru": "~232 м", "kk": "~232 м", "en": "~232 m" }, "provenance": { "ru": "спутниковое наблюдение, композит 16 дней", "kk": "спутниктік бақылау", "en": "satellite observation, 16-day composite" } },
+    { "id": "power", "title": "NASA POWER (WS10M, GWETTOP)", "resolution_m": 55000, "origin": "cache", "spatial_resolution": { "ru": "~0,5°×0,625°", "kk": "~0,5°×0,625°", "en": "~0.5°×0.625°" }, "provenance": { "ru": "реанализ MERRA-2", "kk": "MERRA-2 реанализі", "en": "MERRA-2 reanalysis" } },
+    { "id": "smap", "title": "SMAP SPL3SMP_E", "resolution_m": 9000, "origin": "cache", "spatial_resolution": { "ru": "сетка 9 км", "kk": "9 км тор", "en": "9 km grid" }, "provenance": { "ru": "спутниковый радиометр", "kk": "спутниктік радиометр", "en": "satellite radiometer" } }
+  ],
+  "warnings": [
+    { "code": "cell_larger_than_field", "source": "power", "params": { "cell_km2": 2401, "field_km2": 3.14 } },
+    { "code": "smap_before_2015_unavailable", "source": "smap", "params": { "fallback": "power_gwettop" } }
+  ]
+}

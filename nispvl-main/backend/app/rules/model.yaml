@@ -1,0 +1,192 @@
+# Поле evidence — класс обоснованности (аудит модели, docs/MODEL_AUDIT.md):
+#   literature — значение или диапазон есть в научном/официальном источнике (сверено с текстом);
+#   agronomist_review — косвенная опора (другой регион, аналог, один год, расчёт), нужна проверка агрономом;
+#   preliminary — предварительное допущение без источника или параметр конструкции модели;
+#   definition — определение, тривиальное значение или величина, рассчитанная из данных.
+# status: verified ставится только при literature/definition, если значение применимо к Северному Казахстану.
+# Параметры модели сравнения севооборотов. Формат значений тот же, что в crops.yaml.
+# Определения из постановки задачи помечены source: task_statement,
+# выбор разработчиков — source: model_design (это настройки шкал, а не агрономия).
+
+horizon:
+  default_years: 4
+  min_years: 3
+  max_years: 5
+
+history:
+  min_years: 3
+  max_years: 5
+
+# ---------------------------------------------------------------- климат
+season:
+  months: [5, 6, 7, 8]          # вегетационный сезон: май–август
+presowing:
+  months: [4, 5]                # предпосевной период: апрель–май (SMAP)
+offseason:
+  months: [9, 10, 11, 12, 1, 2, 3, 4]   # сентябрь прошлого года – апрель
+
+drought:
+  baseline_years: [1991, 2020]  # климатическая норма ВМО
+  window_years: 25              # за сколько последних полных лет считать долю засушливых
+  percentile:
+    {value: 20, unit: "перцентиль", source: task_statement, status: verified, evidence: definition,
+     note: "Определение из постановки: сумма осадков за май–август ниже 20-го перцентиля многолетнего ряда"}
+  anomaly_threshold:
+    {value: -1.0, unit: "σ", source: task_statement, status: verified, evidence: definition,
+     note: "Определение из постановки: или стандартизированная аномалия осадков ≤ −1"}
+
+ndvi_trend:
+  min_years: 8
+  min_valid_fraction: 0.5       # доля пикселей поля с хорошим качеством, ниже — композит отбрасывается
+  p_value:
+    {value: 0.05, unit: "—", source: model_design, status: verified, evidence: definition,
+     note: "Тренд называем «растёт» или «снижается», только если p < 0,05; иначе «стабилен»"}
+
+# ---------------------------------------------------------------- влага
+water:
+  root_zone_cm: 100
+  fallow_stock_gain_pct:
+    {value: 25, unit: "%", source: kazhydromet_moisture, status: assumption, evidence: agronomist_review,
+     note: "На сколько запас влаги к посеву после пара больше, чем после стерни. Казгидромет (СКО, один сезон): пар +7 % к норме, стерня и зябь −9…−25 % — разница 16–32 %, взята середина. Независимая опора: Swift Current — весной под паром на 1,7 дюйма (≈43 мм) больше влаги в слое 1,2 м, чем под стерней (Zentner et al., 1997); у нас +25 % от 110 мм ≈ +27 мм, то есть эффект пара скорее занижен. Повышение эффективности использования воды после пара (2,6 против 2,2 бушеля/акр/дюйм) и минерализация азота не учтены"}
+  moisture_coef_max:
+    {value: 1.3, unit: "—", source: model_design, status: assumption, evidence: preliminary,
+     note: "Верхний предел коэффициента влаги: при избытке влаги урожай ограничивают другие факторы (питание, сроки, болезни). TODO: проверить у агронома"}
+  relative_yield_min:
+    {value: 0.05, unit: "—", source: model_design, status: assumption, evidence: preliminary,
+     note: "Нижний предел относительного урожая в формуле FAO-33, чтобы расчёт не уходил в ноль"}
+  smap_ratio_bounds: [0.5, 1.5]  # ограничение поправки запаса влаги по SMAP
+
+# ---------------------------------------------------------------- монокультура
+monoculture:
+  min_run_years: 3              # три и более года подряд одной зерновой культуры (с учётом истории поля)
+  yield_penalty_pct:
+    {value: -10, unit: "%", source: poga_pea, status: assumption, evidence: agronomist_review,
+     note: "Дополнительное снижение на 3-й и последующие годы зерновой монокультуры. Опора: в данных Манитобы культура по самой себе на 4–11 % ниже средней, в Альберте ячмень по ячменю −6 % (Smith et al., 2023); для пшеницы по пшенице многолетних данных не найдено. TODO: проверить по данным НПЦ им. Бараева"}
+  soil_penalty_points:
+    {value: -2, unit: "пункты индекса почвы в год", source: model_design, status: assumption, evidence: preliminary,
+     note: "Штраф к индексу почвы за каждый год зерновой монокультуры начиная с третьего"}
+
+# ---------------------------------------------------------------- индекс почвы
+# Индекс = 100 (состояние сегодня) + сумма по годам:
+#   азотный баланс / nitrogen_kg_per_point + баланс гумуса / humus_t_per_point (+ штраф за монокультуру)
+soil_index:
+  start: 100
+  nitrogen_kg_per_point:
+    {value: 10, unit: "кг N/га на 1 пункт", source: model_design, status: assumption, evidence: preliminary,
+     note: "Шкала: +10 кг азота на гектар = +1 пункт индекса"}
+  humus_t_per_point:
+    {value: 0.25, unit: "т/га на 1 пункт", source: model_design, status: assumption, evidence: preliminary,
+     note: "Шкала: +0,25 т гумуса на гектар = +1 пункт индекса"}
+
+# ---------------------------------------------------------------- оценки 1–5
+scoring:
+  # Шкала строится от худшего до лучшего значения среди сравниваемых вариантов
+  # и опорных вариантов (варианты по умолчанию): так оценка не «схлопывается»,
+  # когда пользователь сравнивает два похожих севооборота.
+  include_reference_variants: true
+  neutral_score: 3.0            # если все варианты равны
+
+priorities:
+  max_income:
+    name: {ru: "Максимальный доход", kk: "Барынша жоғары табыс", en: "Maximise income"}
+    weights:
+      {value: {income: 0.50, risk: 0.20, soil: 0.15, water: 0.15}, unit: "доля", source: model_design, status: assumption, evidence: preliminary,
+       note: "Веса оценок для приоритета «максимальный доход». Настройка, не агрономия"}
+  save_moisture:
+    name: {ru: "Сохранение влаги", kk: "Ылғалды сақтау", en: "Conserve moisture"}
+    weights:
+      {value: {income: 0.15, risk: 0.25, soil: 0.15, water: 0.45}, unit: "доля", source: model_design, status: assumption, evidence: preliminary,
+       note: "Веса оценок для приоритета «сохранение влаги». Настройка, не агрономия"}
+  restore_soil:
+    name: {ru: "Восстановление почвы", kk: "Топырақты қалпына келтіру", en: "Restore soil"}
+    weights:
+      {value: {income: 0.20, risk: 0.15, soil: 0.50, water: 0.15}, unit: "доля", source: model_design, status: assumption, evidence: preliminary,
+       note: "Веса оценок для приоритета «восстановление почвы». Настройка, не агрономия"}
+
+  minimize_risk:
+    name: {ru: "Минимальный риск засухи", kk: "Құрғақшылық тәуекелі ең аз", en: "Minimise drought risk"}
+    weights:
+      {value: {income: 0.20, risk: 0.45, soil: 0.15, water: 0.20}, unit: "доля", source: model_design, status: assumption, evidence: preliminary,
+       note: "Веса оценок для приоритета «минимальный риск засухи». Настройка, не агрономия"}
+  balanced:
+    name: {ru: "Баланс экономики и экологии", kk: "Экономика мен экология теңгерімі", en: "Balance economics and environment"}
+    weights:
+      {value: {income: 0.25, risk: 0.25, soil: 0.25, water: 0.25}, unit: "доля", source: model_design, status: assumption, evidence: preliminary,
+       note: "Равные веса четырёх оценок. Настройка, не агрономия"}
+
+# ---------------------------------------------------------------- оценка рисков (модуль «Риски»)
+# Пороги переводят наблюдения в уровни «умеренный / высокий». Это правила интерфейса, а не агрономические
+# константы: они помечены как preliminary, кроме порога засухи, который совпадает с определением засушливого года.
+risk:
+  precip_anomaly_moderate:
+    {value: -0.5, unit: "σ", source: model_design, status: assumption, evidence: preliminary,
+     note: "Осадки май–август на 0,5 стандартного отклонения ниже нормы 1991–2020 — умеренный риск"}
+  precip_anomaly_high:
+    {value: -1.0, unit: "σ", source: task_statement, status: verified, evidence: definition,
+     note: "Совпадает с определением засушливого года (аномалия ≤ −1σ)"}
+  temperature_anomaly_moderate:
+    {value: 1.0, unit: "σ", source: model_design, status: assumption, evidence: preliminary,
+     note: "Средняя температура май–август выше нормы 1991–2020 на 1σ — умеренный риск"}
+  temperature_anomaly_high:
+    {value: 2.0, unit: "σ", source: model_design, status: assumption, evidence: preliminary,
+     note: "Выше нормы на 2σ — высокий риск"}
+  hot_day_threshold_c:
+    {value: 30, unit: "°C", source: model_design, status: assumption, evidence: preliminary,
+     note: "Жаркий день — максимум T2M ≥ 30 °C. Порог теплового стресса яровой пшеницы в фазы цветения и налива обычно указывают около 30–32 °C; значение требует проверки агрономом"}
+  ndvi_percentile_moderate:
+    {value: 25, unit: "перцентиль", source: model_design, status: assumption, evidence: preliminary,
+     note: "Максимум NDVI сезона ниже 25-го перцентиля лет наблюдений — необычно слабая вегетация (не доказательство потери урожая)"}
+  ndvi_percentile_high:
+    {value: 10, unit: "перцентиль", source: model_design, status: assumption, evidence: preliminary,
+     note: "Ниже 10-го перцентиля — очень слабая вегетация относительно истории поля"}
+  moisture_ratio_moderate:
+    {value: 0.9, unit: "доля медианы", source: model_design, status: assumption, evidence: preliminary,
+     note: "Влажность почвы в апреле–мае ниже 90 % медианы лет наблюдений"}
+  moisture_ratio_high:
+    {value: 0.75, unit: "доля медианы", source: model_design, status: assumption, evidence: preliminary,
+     note: "Ниже 75 % медианы"}
+  drought_share_moderate:
+    {value: 0.2, unit: "доля лет", source: model_design, status: assumption, evidence: preliminary,
+     note: "Засушливым был каждый 5-й год и чаще (по определению засушливого года, за 25 лет)"}
+  drought_share_high:
+    {value: 0.3, unit: "доля лет", source: model_design, status: assumption, evidence: preliminary,
+     note: "Засушливым был почти каждый 3-й год и чаще"}
+  model_loss_moderate:
+    {value: 10, unit: "%", source: model_design, status: assumption, evidence: preliminary,
+     note: "Модельное снижение урожайности пшеницы в засушливый год (FAO-33) на 10 % и больше"}
+  model_loss_high:
+    {value: 25, unit: "%", source: model_design, status: assumption, evidence: preliminary,
+     note: "Модельное снижение на 25 % и больше"}
+
+# ---------------------------------------------------------------- пригодность культур (модуль «Пригодность»)
+suitability:
+  moisture_coef_caution:
+    {value: 0.9, unit: "—", source: model_design, status: assumption, evidence: preliminary,
+     note: "Коэффициент влаги поля ниже 0,9 относительно обычных условий области — пометка «ограничение по влаге»"}
+  predecessor_caution_pct:
+    {value: -10, unit: "%", source: model_design, status: assumption, evidence: preliminary,
+     note: "Эффект предшественника −10 % и хуже — пометка «неудачный предшественник»"}
+  drought_loss_caution_pct:
+    {value: 25, unit: "%", source: model_design, status: assumption, evidence: preliminary,
+     note: "Модельная потеря урожая в засушливый год 25 % и больше — пометка «чувствительна к засухе»"}
+
+# ---------------------------------------------------------------- стресс-тест
+stress_test:
+  default_year:
+    {value: 2021, unit: "год", source: task_statement, status: verified, evidence: definition,
+     note: "Засуха 2021 года из постановки задачи. Если по данным поля 2021 год не засушливый, берётся самый сухой год ряда"}
+
+# ---------------------------------------------------------------- варианты по умолчанию
+default_variants:
+  - id: wheat_mono
+    name: {ru: "Как сейчас: пшеница", kk: "Қазіргідей: бидай", en: "Current practice: wheat"}
+    crops: [wheat, wheat, wheat, wheat]
+  - id: lentil_flax
+    name: {ru: "С чечевицей и льном", kk: "Жасымық пен зығырмен", en: "With lentil and flax"}
+    crops: [wheat, lentil, wheat, flax]
+  - id: pea_rapeseed_fallow
+    name: {ru: "С горохом, рапсом и паром", kk: "Асбұршақ, рапс және пармен", en: "With pea, rapeseed and fallow"}
+    crops: [wheat, pea, rapeseed, fallow]
+  - id: chickpea_sunflower
+    name: {ru: "С нутом и подсолнечником", kk: "Ноқат пен күнбағыспен", en: "With chickpea and sunflower"}
+    crops: [wheat, chickpea, sunflower, wheat]

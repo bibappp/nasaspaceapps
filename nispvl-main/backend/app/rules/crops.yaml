@@ -1,0 +1,265 @@
+# Поле evidence — класс обоснованности (аудит модели, docs/MODEL_AUDIT.md):
+#   literature — значение или диапазон есть в научном/официальном источнике (сверено с текстом);
+#   agronomist_review — косвенная опора (другой регион, аналог, один год, расчёт), нужна проверка агрономом;
+#   preliminary — предварительное допущение без источника или параметр конструкции модели;
+#   definition — определение, тривиальное значение или величина, рассчитанная из данных.
+# status: verified ставится только при literature/definition, если значение применимо к Северному Казахстану.
+# Культуры. У каждого значения: value, unit, source (id из sources.yaml), status, note.
+#   status: verified   — значение есть в указанном источнике и проверено при разработке;
+#   status: assumption — правдоподобное значение без проверенного первоисточника
+#                        для условий Северного Казахстана. В интерфейсе помечается «требует проверки».
+#
+# base_yield_t_ha — типичная урожайность «по зерновому предшественнику» для севера Казахстана;
+#   для области умножается на regions.yaml -> yield_index.
+# water_need_mm   — потребность культуры во влаге за сезон (ETm) для формулы FAO-33.
+# ky              — коэффициент реакции урожая на дефицит влаги (FAO): Ky > 1 — культура чувствительна,
+#                   Ky < 1 — переносит дефицит лучше. Заменяет «засухоустойчивость 0–1» из постановки:
+#                   у Ky есть опубликованные значения.
+# nitrogen_balance_kg_ha — баланс азота почвы за год без удобрений (фиксация минус вынос с зерном).
+# humus_balance_t_ha     — изменение запаса гумуса за год.
+# sowing_window, harvest_window — типичные окна сева и уборки {start, end} в формате «ММ-ДД» (планировщик:
+#   дни без зелёного покрова, erosion.yaml -> planner). У пара окон нет: bare_whole_season — без покрова весь
+#   бесснежный сезон.
+
+crops:
+  wheat:
+    name: {ru: "Пшеница яровая", kk: "Жаздық бидай", en: "Spring wheat"}
+    short: {ru: "пшеница", kk: "бидай", en: "wheat"}
+    group: cereal
+    nitrogen_fixing: false
+    base_yield_t_ha:
+      {value: 1.1, unit: "т/га", source: akmola_harvest_2025, status: assumption, evidence: agronomist_review,
+       note: "1,1 т/га × индекс Акмолинской обл. 0,91 ≈ 1,0 т/га — внутри наблюдаемого диапазона: Акмолинская обл. 16,3 ц/га (2025, рекорд), 14,1 ц/га (2024), около 6,4 ц/га в засушливый год; РК 9,8 (2021), 13,6 (2022), 16,3 ц/га (2025, зерновые и зернобобовые, БНС). Областная статистика включает пшеницу по пару (выше, чем по стерне). Нужна средняя за 5 лет по стерневому предшественнику (stat.gov.kz)"}
+    price_kzt_t:
+      {value: 104000, unit: "тенге/т", source: moa_prices_2026, status: verified, evidence: literature,
+       note: "МСХ РК, 27.07.2026: пшеница мягкая 3 класса, клейковина до 25 % — 104 тг/кг (28 % и выше — 115), с НДС, с элеватора. Тот же документ и та же дата, что у цен льна, рапса, подсолнечника, гороха и чечевицы. До аудита стояло 67 500 тг/т из постановки задачи (65–70 тыс.): значение другой даты; смешение источников завышало выгоду диверсификации. Результаты при прежней цене — docs/audit/AUDIT_TABLES_v0.1-rules.md"}
+    cost_kzt_ha:
+      {value: 60000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "TODO: проверить у агронома. Ориентир для уточнения — нормативы затрат на гектар по областям (zakon.uchet.kz, V1500011418)"}
+    water_need_mm:
+      {value: 550, unit: "мм", source: fao_water_needs, status: assumption, evidence: agronomist_review,
+       note: "FAO (Brouwer & Heibloem 1986, табл. 5): пшеница/ячмень/овёс 450–650 мм при вегетации 120–150 дней — сверено 12.11.2026, взята середина. В Северном Казахстане вегетация короче; измеренное суммарное испарение посевов 194–259 мм (Funakawa et al., 2004). Рекомендация: рассчитать ETm = Kc × ET0 по данным поля. Чувствительность: при 400 мм доход вариантов меняется менее чем на 2 %"}
+    ky:
+      {value: 1.15, unit: "—", source: fao56, status: verified, evidence: literature,
+       note: "FAO-56, табл. 24 (по FAO-33): Spring wheat Ky = 1,15 — сверено с текстом FAO 12.11.2026"}
+    nitrogen_balance_kg_ha:
+      {value: -25, unit: "кг N/га в год", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Баланс массы: вынос с зерном ~1,1 т/га × ~2,3 % N ≈ 25 кг N/га; без удобрений, солома остаётся в поле, минерализация не учтена. Содержание азота в зерне — справочная величина, сверить с агрохимслужбой"}
+    humus_balance_t_ha:
+      {value: -0.5, unit: "т/га в год", source: kazhydromet_humus, status: assumption, evidence: literature,
+       note: "Саттыбаева (2004): чистые потери гумуса под зерновыми 0,5–1 т/га в год в зависимости от уровня урожая — сверено с текстом статьи. При низкой урожайности севера взята нижняя граница диапазона"}
+    sowing_window:
+      {value: {start: "05-15", end: "05-31"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: kazhydromet_sowing_2025, status: assumption, evidence: agronomist_review,
+       note: "Казгидромет: оптимальные сроки сева яровых зерновых весной 2025 г. (прогноз, табл. 2) — Шортанды 14.05–24.05, Атбасар 11.05–21.05, Костанай 13.05–23.05, Карабалык 17.05–27.05; фактический сев яровой пшеницы 2026 г. на постах Акмолинской и Костанайской обл. — 13.05–30.05 (kazhydromet_maturation_2026, табл. 1). Текст PDF прочитан 15.11.2026. Прогноз одного года («несколько раньше климатических сроков»), а не многолетняя рекомендация; рекомендации НПЦ им. Бараева (nasec.kz) в контейнере недоступны. TODO агроному: сверить с рекомендациями НПЦ им. Бараева"}
+    harvest_window:
+      {value: {start: "08-20", end: "10-01"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: kazhydromet_maturation_2026, status: assumption, evidence: agronomist_review,
+       note: "Казгидромет, прогноз созревания 2026 г. (окончательный): в северных областях восковая спелость яровой пшеницы в основном в первой половине августа, на постах Акмолинской и Костанайской обл. 01.08–24.08 (Шортанды 11.08, Костанай 07.08). Начало окна 20.08 — после восковой спелости (раздельная уборка начинается с неё; срок между фазой и уборкой в источнике не указан). Конец окна совпадает с erosion.cover_crop.harvest_end (01.10, сводки об окончании уборки по областям) — загрузчик проверяет, что уборка зерновых кончается не позже этой даты. Один год наблюдений; TODO агроному: типичные даты уборки по журналам хозяйств"}
+
+  lentil:
+    name: {ru: "Чечевица", kk: "Жасымық", en: "Lentil"}
+    short: {ru: "чечевица", kk: "жасымық", en: "lentil"}
+    group: legume
+    nitrogen_fixing: true
+    base_yield_t_ha:
+      {value: 0.9, unit: "т/га", source: stat_gov_kz, status: assumption, evidence: agronomist_review,
+       note: "Оценка. Косвенная опора: в 2025 г. около 1 млн т бобовых с ~781 тыс. га (≈12–13 ц/га, рекордный год; площадь и год сбора в источниках не согласованы). Нужна статистика по области"}
+    price_kzt_t:
+      {value: 127000, unit: "тенге/т", source: moa_prices_2026, status: verified, evidence: literature,
+       note: "МСХ РК, 27.07.2026: чечевица красная 127 тг/кг БЕЗ НДС (остальные культуры в документе — с НДС). Цена сильно колеблется (в декабре 2024 г. — 169)"}
+    cost_kzt_ha:
+      {value: 80000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary, note: "TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 400, unit: "мм", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "В табл. 5 FAO чечевицы нет (табл. 4 FAO: вегетация 150–170 дней в тёплом климате). Принято близко к гороху (350–500 мм) — аналогия"}
+    ky:
+      {value: 1.0, unit: "—", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Специфичного Ky для чечевицы в FAO-33/56 нет. FAO-56: «для культур, где Ky неизвестен, можно использовать Ky = 1» — методическое значение по умолчанию, сверено"}
+    nitrogen_balance_kg_ha:
+      {value: 15, unit: "кг N/га в год", source: walley_2007, status: assumption, evidence: agronomist_review,
+       note: "Направление подтверждено: Walley et al. (2007) — горох и чечевица чаще дают положительный вклад в баланс азота, но он сильно колеблется по годам. Величина +15 кг/га — оценка"}
+    humus_balance_t_ha:
+      {value: -0.3, unit: "т/га в год", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Принято меньше потерь, чем под зерновыми (богатые азотом остатки). Числовой опоры нет. TODO: проверить у агронома"}
+    sowing_window:
+      {value: {start: "05-15", end: "05-31"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Принято как для яровой пшеницы (теплолюбивая бобовая, сев в мае). Проверенного источника нет: статья о сроках посева чечевицы на южных чернозёмах Костанайской обл. (ojs.ksu.edu.kz) найдена в поиске, но в контейнере недоступна и не прочитана. TODO агроному"}
+    harvest_window:
+      {value: {start: "08-10", end: "09-10"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка: чечевица созревает раньше яровой пшеницы. Источника нет. TODO агроному"}
+
+  pea:
+    name: {ru: "Горох", kk: "Асбұршақ", en: "Field pea"}
+    short: {ru: "горох", kk: "асбұршақ", en: "pea"}
+    group: legume
+    nitrogen_fixing: true
+    base_yield_t_ha:
+      {value: 1.1, unit: "т/га", source: stat_gov_kz, status: assumption, evidence: agronomist_review, note: "Оценка, около средней урожайности зернобобовых РК. Нужна статистика по области"}
+    price_kzt_t:
+      {value: 100000, unit: "тенге/т", source: moa_prices_2026, status: verified, evidence: literature,
+       note: "Горох жёлтый, 100 тг/кг на 27.07.2026 (для северных регионов — премиальное качество)"}
+    cost_kzt_ha:
+      {value: 70000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary, note: "TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 425, unit: "мм", source: fao_water_needs, status: assumption, evidence: literature,
+       note: "FAO (табл. 5): горох 350–500 мм, вегетация 90–100 дней (табл. 4) — близко к сезону Северного Казахстана. Сверено 12.11.2026, взята середина"}
+    ky:
+      {value: 1.15, unit: "—", source: fao56, status: verified, evidence: literature,
+       note: "FAO-56, табл. 24: Peas Ky = 1,15 — сверено с текстом FAO 12.11.2026"}
+    nitrogen_balance_kg_ha:
+      {value: 20, unit: "кг N/га в год", source: walley_2007, status: assumption, evidence: agronomist_review,
+       note: "Направление подтверждено: Walley et al. (2007) — горох относится к культурам с высокой фиксацией и чаще даёт положительный баланс. Величина +20 кг/га — оценка"}
+    humus_balance_t_ha:
+      {value: -0.3, unit: "т/га в год", source: expert_guess, status: assumption, evidence: preliminary, note: "Числовой опоры нет. TODO: проверить у агронома"}
+    sowing_window:
+      {value: {start: "05-05", end: "05-20"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка: горох холодостоек, его сеют раньше зерновых. Источника для Северного Казахстана нет. TODO агроному"}
+    harvest_window:
+      {value: {start: "08-01", end: "08-31"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка: вегетация гороха 90–100 дней (FAO, табл. 4; см. water_need_mm) от сева в начале–середине мая. Даты уборки в источнике нет. TODO агроному"}
+
+  chickpea:
+    name: {ru: "Нут", kk: "Ноқат", en: "Chickpea"}
+    short: {ru: "нут", kk: "ноқат", en: "chickpea"}
+    group: legume
+    nitrogen_fixing: true
+    base_yield_t_ha:
+      {value: 0.8, unit: "т/га", source: stat_gov_kz, status: assumption, evidence: preliminary, note: "Оценка без статистики по области. TODO: проверить у агронома"}
+    price_kzt_t:
+      {value: 150000, unit: "тенге/т", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "В рекомендациях Минсельхоза от 27.07.2026 цены на нут не найдено. TODO: проверить"}
+    cost_kzt_ha:
+      {value: 75000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary, note: "TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 400, unit: "мм", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "В таблице FAO нута нет. TODO: проверить у агронома"}
+    ky:
+      {value: 1.0, unit: "—", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Специфичного Ky для нута в FAO нет. FAO-56 рекомендует Ky = 1 для культур без данных — методическое значение по умолчанию"}
+    nitrogen_balance_kg_ha:
+      {value: 5, unit: "кг N/га в год", source: walley_2007, status: assumption, evidence: agronomist_review,
+       note: "Walley et al. 2007 относит к культурам с высокой фиксацией горох, чечевицу и кормовые бобы; для нута баланс принят около нуля. TODO: проверить у агронома"}
+    humus_balance_t_ha:
+      {value: -0.3, unit: "т/га в год", source: expert_guess, status: assumption, evidence: preliminary, note: "TODO: проверить у агронома"}
+    sowing_window:
+      {value: {start: "05-10", end: "05-25"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника. TODO агроному"}
+    harvest_window:
+      {value: {start: "08-20", end: "09-20"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника. TODO агроному"}
+
+  flax:
+    name: {ru: "Лён масличный", kk: "Майлы зығыр", en: "Oilseed flax"}
+    short: {ru: "лён", kk: "зығыр", en: "flax"}
+    group: oilseed
+    nitrogen_fixing: false
+    base_yield_t_ha:
+      {value: 0.8, unit: "т/га", source: stat_gov_kz, status: assumption, evidence: agronomist_review, note: "Оценка. Единственная найденная опора — одно хозяйство: 11 ц/га в 2024 г. (Олжа Агро). Нужна статистика по области"}
+    price_kzt_t:
+      {value: 211000, unit: "тенге/т", source: moa_prices_2026, status: verified, evidence: literature,
+       note: "МСХ РК, 27.07.2026: лён 211 тг/кг, с НДС, с элеватора — тот же документ, что у остальных цен. До аудита стояло 200 000 («от 200 тыс.» из постановки задачи)"}
+    cost_kzt_ha:
+      {value: 75000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary, note: "TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 450, unit: "мм", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "В табл. 5 FAO масличного льна нет (вегетация 150–220 дней, табл. 4). TODO: проверить у агронома"}
+    ky:
+      {value: 1.0, unit: "—", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Специфичного Ky для льна в FAO нет. FAO-56 рекомендует Ky = 1 для культур без данных"}
+    nitrogen_balance_kg_ha:
+      {value: -25, unit: "кг N/га в год", source: expert_guess, status: assumption, evidence: agronomist_review, note: "Баланс массы: вынос с семенами ~0,8 т/га × ~3,5 % N ≈ 28 кг/га, без удобрений. Содержание N — справочное, сверить"}
+    humus_balance_t_ha:
+      {value: -0.5, unit: "т/га в год", source: kazhydromet_humus, status: assumption, evidence: agronomist_review,
+       note: "Принято как для зерновых (культура сплошного сева) по Саттыбаевой (2004); прямых данных для льна нет"}
+    sowing_window:
+      {value: {start: "05-15", end: "05-31"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника: сев в те же сроки, что и пшеница. TODO агроному"}
+    harvest_window:
+      {value: {start: "09-01", end: "09-30"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника: лён убирают позже пшеницы (заметка к erosion.cover_crop.harvest_end). TODO агроному"}
+
+  rapeseed:
+    name: {ru: "Рапс яровой", kk: "Жаздық рапс", en: "Spring rapeseed"}
+    short: {ru: "рапс", kk: "рапс", en: "rapeseed"}
+    group: oilseed
+    nitrogen_fixing: false
+    base_yield_t_ha:
+      {value: 0.9, unit: "т/га", source: stat_gov_kz, status: assumption, evidence: preliminary, note: "Оценка без статистики по области. TODO: проверить у агронома"}
+    price_kzt_t:
+      {value: 225000, unit: "тенге/т", source: moa_prices_2026, status: verified, evidence: literature,
+       note: "МСХ РК, 27.07.2026: рапс 225 тг/кг, с НДС, с элеватора — тот же документ, что у остальных цен. До аудита стояло 200 000 («от 200 тыс.» из постановки задачи)"}
+    cost_kzt_ha:
+      {value: 95000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Принято выше пшеницы: рапс требователен к азоту и защите. TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 500, unit: "мм", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "В таблице FAO ярового рапса нет. TODO: проверить у агронома"}
+    ky:
+      {value: 1.0, unit: "—", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Специфичного Ky для рапса в FAO нет. FAO-56 рекомендует Ky = 1 для культур без данных"}
+    nitrogen_balance_kg_ha:
+      {value: -30, unit: "кг N/га в год", source: expert_guess, status: assumption, evidence: agronomist_review, note: "Баланс массы: вынос с семенами ~0,9 т/га × ~3,3 % N ≈ 30 кг/га, без удобрений. Содержание N — справочное, сверить"}
+    humus_balance_t_ha:
+      {value: -0.5, unit: "т/га в год", source: kazhydromet_humus, status: assumption, evidence: agronomist_review,
+       note: "Принято как для зерновых (культура сплошного сева) по Саттыбаевой (2004); прямых данных для рапса нет"}
+    sowing_window:
+      {value: {start: "05-15", end: "05-31"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника. TODO агроному"}
+    harvest_window:
+      {value: {start: "09-01", end: "09-30"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника: рапс убирают позже пшеницы (заметка к erosion.cover_crop.harvest_end). TODO агроному"}
+
+  sunflower:
+    name: {ru: "Подсолнечник", kk: "Күнбағыс", en: "Sunflower"}
+    short: {ru: "подсолнечник", kk: "күнбағыс", en: "sunflower"}
+    group: oilseed
+    nitrogen_fixing: false
+    base_yield_t_ha:
+      {value: 0.9, unit: "т/га", source: stat_gov_kz, status: assumption, evidence: preliminary, note: "Оценка без статистики по области. TODO: проверить у агронома"}
+    price_kzt_t:
+      {value: 221000, unit: "тенге/т", source: moa_prices_2026, status: verified, evidence: literature,
+       note: "221 тг/кг на 27.07.2026, диапазон рекомендаций 180–240"}
+    cost_kzt_ha:
+      {value: 85000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary, note: "TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 800, unit: "мм", source: fao_water_needs, status: assumption, evidence: agronomist_review,
+       note: "FAO (табл. 5): подсолнечник 600–1000 мм при вегетации 125–130 дней — сверено, взята середина. На севере сезон короче; нужен расчёт ETm по данным поля"}
+    ky:
+      {value: 0.95, unit: "—", source: fao56, status: verified, evidence: literature,
+       note: "FAO-56, табл. 24: Sunflower Ky = 0,95 — сверено с текстом FAO 12.11.2026"}
+    nitrogen_balance_kg_ha:
+      {value: -25, unit: "кг N/га в год", source: expert_guess, status: assumption, evidence: agronomist_review, note: "Баланс массы: вынос с семенами ~0,9 т/га × ~2,8 % N ≈ 25 кг/га, без удобрений. Содержание N — справочное, сверить"}
+    humus_balance_t_ha:
+      {value: -1.0, unit: "т/га в год", source: kazhydromet_humus, status: assumption, evidence: literature,
+       note: "Саттыбаева (2004): под пропашными потери гумуса в 2–3 раза выше, чем под зерновыми (0,5–1 т/га), то есть 1–3 т/га. Взята нижняя граница — сверено с текстом статьи"}
+    sowing_window:
+      {value: {start: "05-10", end: "05-25"}, unit: "ММ-ДД, начало и конец типичного окна сева", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника: пропашная культура, сев при прогреве почвы. TODO агроному"}
+    harvest_window:
+      {value: {start: "09-15", end: "10-15"}, unit: "ММ-ДД, начало и конец типичного окна уборки", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Оценка без источника: подсолнечник убирают последним, часто после окончания уборки зерновых. TODO агроному"}
+
+  fallow:
+    name: {ru: "Пар чистый", kk: "Таза пар", en: "Bare fallow"}
+    short: {ru: "пар", kk: "пар", en: "fallow"}
+    group: fallow
+    nitrogen_fixing: false
+    base_yield_t_ha:
+      {value: 0, unit: "т/га", source: model_design, status: verified, evidence: definition, note: "Пар урожая не даёт"}
+    price_kzt_t:
+      {value: 0, unit: "тенге/т", source: model_design, status: verified, evidence: definition, note: "Пар урожая не даёт"}
+    cost_kzt_ha:
+      {value: 15000, unit: "тенге/га", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Обработки пара (механические или гербицидные). TODO: проверить у агронома"}
+    water_need_mm:
+      {value: 0, unit: "мм", source: model_design, status: verified, evidence: definition, note: "На пару культура воду не расходует"}
+    ky:
+      {value: 0, unit: "—", source: model_design, status: verified, evidence: definition, note: "Не применяется"}
+    nitrogen_balance_kg_ha:
+      {value: 0, unit: "кг N/га в год", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Выноса с урожаем нет. Не учтены минерализация азота на пару (запас нитратов для следующей культуры) и потери нитратов. TODO: проверить у агронома"}
+    humus_balance_t_ha:
+      {value: -1.5, unit: "т/га в год", source: expert_guess, status: assumption, evidence: literature,
+       note: "Саттыбаева (2004): потери гумуса на парах на 10 % выше, чем под интенсивной пропашной культурой (1–3 т/га), то есть 1,1–3,3 т/га; −1,5 т/га внутри диапазона. Сверено с текстом статьи"}
+    bare_whole_season:
+      {value: true, unit: "—", source: model_design, status: verified, evidence: definition,
+       note: "Чистый пар по определению держат без растений весь сезон (обработки уничтожают сорняки), поэтому в планировщике пар — без зелёного покрова весь бесснежный сезон. Окон сева и уборки у пара нет. Стерня предшественника на пару не учитывается: класс «без зелёного покрова» тот же, что в «Часах голой почвы» (открытая почва или стерня)"}

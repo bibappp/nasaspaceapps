@@ -1,0 +1,51 @@
+{
+ "feed": {
+  "entry": [
+   {
+    "title": "SMAP_L3_SM_P_E_20240331_R19240_001.h5",
+    "time_start": "2024-03-31T00:00:00.000Z",
+    "links": [
+     {
+      "href": "https://opendap.earthdata.nasa.gov/collections/C2938664763-NSIDC_CPRD/granules/SMAP_L3_SM_P_E_20240331_R19240_001.h5"
+     }
+    ]
+   },
+   {
+    "title": "SMAP_L3_SM_P_E_20240415_R19240_001.h5",
+    "time_start": "2024-04-15T00:00:00.000Z",
+    "links": [
+     {
+      "href": "https://opendap.earthdata.nasa.gov/collections/C2938664763-NSIDC_CPRD/granules/SMAP_L3_SM_P_E_20240415_R19240_001.h5"
+     }
+    ]
+   },
+   {
+    "title": "SMAP_L3_SM_P_E_20240520_R19240_001.h5",
+    "time_start": "2024-05-20T00:00:00.000Z",
+    "links": [
+     {
+      "href": "https://opendap.earthdata.nasa.gov/collections/C2938664763-NSIDC_CPRD/granules/SMAP_L3_SM_P_E_20240520_R19240_001.h5"
+     }
+    ]
+   },
+   {
+    "title": "SMAP_L3_SM_P_E_20240710_R19240_001.h5",
+    "time_start": "2024-07-10T00:00:00.000Z",
+    "links": [
+     {
+      "href": "https://opendap.earthdata.nasa.gov/collections/C2938664763-NSIDC_CPRD/granules/SMAP_L3_SM_P_E_20240710_R19240_001.h5"
+     }
+    ]
+   },
+   {
+    "title": "SMAP_L3_SM_P_E_20241031_R19240_001.h5",
+    "time_start": "2024-10-31T00:00:00.000Z",
+    "links": [
+     {
+      "href": "https://opendap.earthdata.nasa.gov/collections/C2938664763-NSIDC_CPRD/granules/SMAP_L3_SM_P_E_20241031_R19240_001.h5"
+     }
+    ]
+   }
+  ]
+ }
+}

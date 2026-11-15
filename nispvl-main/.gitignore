@@ -1,0 +1,27 @@
+# секреты
+.env
+*.env.local
+
+# кэш внешних API (демо-данные лежат в data/demo и хранятся в git)
+data/cache/*
+!data/cache/.gitkeep
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# node
+node_modules/
+frontend/dist/
+
+# прочее
+.DS_Store
+*.log
+
+# база учётных записей и полей
+data/app.db
+data/app.db-*

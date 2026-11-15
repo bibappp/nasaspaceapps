@@ -1,0 +1,177 @@
+# Справочник источников для правил модели. В остальных файлах правил на источник
+# ссылаются по идентификатору: `source: fao56`. Загрузчик подставляет название и ссылку.
+# Если ссылки пока нет — пишем "TODO: ссылка" (список таких мест выводится в README).
+
+task_statement:
+  name: "Постановка задачи хакатона (цифра из текста задания, проверить по первоисточнику)"
+  url: "TODO: ссылка"
+
+model_design:
+  name: "Параметр конструкции модели (выбор разработчиков, не агрономический факт)"
+  url: "https://github.com/Zenyqtoo/Nasa-space-apps/blob/main/docs/MODEL_AUDIT.md"
+
+expert_guess:
+  name: "Экспертная оценка разработчиков без первоисточника"
+  url: "TODO: ссылка"
+
+fao33:
+  name: "Doorenbos J., Kassam A.H. Yield response to water. FAO Irrigation and Drainage Paper 33, 1979 (формула 1 − Ya/Ym = Ky·(1 − ETa/ETm))"
+  url: "https://www.fao.org/4/i2800e/i2800e02.pdf"
+
+fao56:
+  name: "Allen R.G. et al. Crop evapotranspiration. FAO Irrigation and Drainage Paper 56, 1998, табл. 24 (коэффициенты Ky)"
+  url: "https://www.fao.org/3/x0490e/x0490e0e.htm"
+
+fao_water_needs:
+  name: "Brouwer C., Heibloem M. Irrigation Water Management: Irrigation Water Needs. FAO Training Manual 3, 1986, гл. 2 (потребность культур в воде за сезон)"
+  url: "https://www.fao.org/4/s2022e/s2022e02.htm"
+
+saxton_rawls_2006:
+  name: "Saxton K.E., Rawls W.J. Soil water characteristic estimates by texture and organic matter for hydrologic solutions. SSSAJ 70:1569–1578, 2006"
+  url: "https://doi.org/10.2136/sssaj2005.0117"
+
+saskpulse_sequence:
+  name: "Saskatchewan Pulse Growers: исследование последовательностей культур с зернобобовыми (пшеница после гороха +26 %, после чечевицы +18 % к пшенице по пшенице)"
+  url: "https://saskpulse.com/research/listing/moving-forward-to-sustainable-development-of-the-saskatchewan-pulse-industry/"
+
+zentner_1997:
+  name: "Zentner R.P. et al., 1997 (Саскачеван, 18 лет): пшеница после чечевицы и после пшеницы дала одинаковую урожайность — контрпример"
+  url: "https://harvest.usask.ca/bitstream/10388/10272/1/R.P.%20Zentner%20et%20al.%2c%201997.pdf"
+
+poga_pea:
+  name: "Smith E., Le Roy D., Jeffrey S., Brewin D. Economic Value of Diversified Cropping Systems. WGRF AGR1858, Final Extension Report, 2023 (данные страхования урожая Альберты и Манитобы): горох по гороху 0,85; рапс по рапсу 0,93; пшеница HRS после рапса 1,16, после гороха 1,15 к пшенице по пшенице"
+  url: "https://poga.ca/wp-content/uploads/2022/06/Extension-Report-AGR-1858-2023011851350.pdf"
+
+angus_2015:
+  name: "Angus J.F. et al. Break crops and rotations for wheat. Crop & Pasture Science 66:523–552, 2015"
+  url: "https://doi.org/10.1071/CP14252"
+
+walley_2007:
+  name: "Walley F.L. et al. Nitrogen economy of pulse crop production in the Northern Great Plains. Agronomy Journal 99:1710–1718, 2007"
+  url: "https://doi.org/10.2134/agronj2006.0314s"
+
+kazhydromet_humus:
+  name: "Саттыбаева З.Д. Изменение плодородия почв при сельскохозяйственном использовании // Гидрометеорология и экология. 2004. № 3: потери гумуса под зерновыми 0,5–1 т/га в год, под пропашными в 2–3 раза больше, на парах на 10 % больше, чем под пропашными"
+  url: "https://journal.kazhydromet.kz/kazgidro/article/download/1712/1656/9214"
+
+kazhydromet_moisture:
+  name: "Казгидромет / inform.kz: запасы продуктивной влаги в метровом слое в СКО, норма 115–166 мм; пар выше нормы на 7 %, стерня и зябь ниже на 9–25 %"
+  url: "https://www.inform.kz/ru/zapasy-produktivnoy-vlagi-v-pochve-uvelichilis-v-sko_a3929795"
+
+moa_prices_2026:
+  name: "Минсельхоз РК: рекомендации по торговой стратегии для производителей зерна, масличных и бобовых, 27.07.2026 (цены с элеватора, тг/кг: пшеница 3 кл. 104–115, лён 211, рапс 225, подсолнечник 221, горох 100, чечевица красная 127 без НДС)"
+  url: "https://www.gov.kz/memleket/entities/moa/press/news/details/1263807?lang=ru"
+
+wheat_price_2026:
+  name: "Закупочные цены на пшеницу 3 класса урожая 2026 года: 92–115 тыс. тенге/т (inform.kz)"
+  url: "https://www.inform.kz/ru/zakupochnie-tseni-napshenitsu-urozhaya-2026-opredelili-vkazahstane-77c9f6b3"
+
+harvest_2024:
+  name: "Итоги уборки 2024 года: урожайность зерновых в СКО 18,6 ц/га, Акмолинской 14,1 ц/га, Костанайской 14,0 ц/га (рекордный год)"
+  url: "https://dairynews.today/kz/news/kazakhstan-zavershil-uborku-zernovykh-namolocheno-26-5-mln-tonn-urozhaynost-pshenitsy-dostigla-19-8-.html"
+
+stat_gov_kz:
+  name: "Бюро национальной статистики АСПиР РК: урожайность сельскохозяйственных культур по областям"
+  url: "https://stat.gov.kz/industries/busi-ness-statistics/stat-forrest-village-hunt-fish/publications/"
+
+barayev:
+  name: "НПЦ зернового хозяйства им. А. И. Бараева: рекомендации по севооборотам Северного Казахстана"
+  url: "TODO: ссылка"
+
+nasa_power:
+  name: "NASA POWER Daily API (MERRA-2), расчёт скриптом scripts/build_region_reference.py"
+  url: "https://power.larc.nasa.gov/docs/services/api/temporal/daily/"
+
+akmola_harvest_2025:
+  name: "Итоги уборки 2025 г. в Акмолинской области: 7,6 млн т зерна, средняя урожайность 16,3 ц/га (bizmedia.kz, 02.12.2025); РК 2025 — 16,3 ц/га зерновых и зернобобовых (БНС АСПиР, «Валовый сбор сельскохозяйственных культур за 2025 год»)"
+  url: "https://bizmedia.kz/2025-12-02-uborochnaya-kampaniya-v-akmolinskoj-oblasti-zavershilas-rekordnymi-rezultatami/"
+
+funakawa_2004:
+  name: "Funakawa S. et al. Water dynamics in soil-plant systems under grain farming in northern Kazakhstan, 2004: суммарное испарение посевов 194–259 мм за сезон (1999–2000), урожай линейно связан с испарением"
+  url: "https://agris.fao.org/search/en/records/6472449e08fd68d54600576a"
+
+# ---------------------------------------------------------------- «Часы голой почвы» (rules/erosion.yaml)
+# Поле note у источника: как он проверен. «Проверено только по выдержке, полный текст не прочитан» —
+# значит, цифра сверена по фрагменту текста из поисковой выдачи (полные тексты в контейнере хакатона
+# были недоступны). Список для сверки по полному тексту — docs/HACKATHON_LOG.md, «To verify on full text».
+
+rweq_1998:
+  name: "Fryrear D.W., Saleh A., Bilbro J.D., Schomberg H.M., Stout J.E., Zobeck T.M. Revised Wind Erosion Equation (RWEQ). Technical Bulletin No. 1. USDA-ARS, Southern Plains Area Cropping Systems Research Laboratory, Wind Erosion and Water Conservation Research Unit, 1998: пороговая скорость эрозионного ветра 5 м/с на высоте 2 м; снежный покров глубже 25,4 мм защищает почву"
+  url: "https://www.soilerosion.net/old/sen/doc/report_6/RWEQmod.htm"
+  note: "Проверено только по выдержке, полный текст не прочитан. Порог 5 м/с на 2 м — по вторичным источникам (например, Frontiers in Environmental Science, 2022, doi:10.3389/fenvs.2022.847128: «RWEQ assumes a value of 5 m/s at a height of 2 m as the threshold»), порог снега 25,4 мм — по выдержке из описания RWEQ"
+
+chepil_1956:
+  name: "Chepil W.S. Influence of moisture on erodibility of soil by wind. Soil Science Society of America Proceedings 20:288–292, 1956: влага до ~1/3 влажности при 15 атм (завядание) почти не влияет на эродируемость, при влажности завядания эродируемость в среднем падает до нуля"
+  url: "https://doi.org/10.2136/sssaj1956.03615995002000020033x"
+  note: "Проверено только по выдержке, полный текст не прочитан (аннотация и пересказ Skidmore & Layton)"
+
+fecan_1999:
+  name: "Fécan F., Marticorena B., Bergametti G. Parametrization of the increase of the aeolian erosion threshold wind friction velocity due to soil moisture for arid and semi-arid areas. Annales Geophysicae 17:149–157, 1999: остаточная влажность w′ = 0,0014·(%глины)² + 0,17·(%глины), % по массе"
+  url: "https://angeo.copernicus.org/articles/17/149/1999/"
+  note: "Проверено только по выдержке, полный текст не прочитан: формула w′ взята из вторичного источника (arXiv:1706.09986), коэффициенты не сверены с оригиналом"
+
+sobrino_2004:
+  name: "Sobrino J.A., Jiménez-Muñoz J.C., Paolini L. Land surface temperature retrieval from LANDSAT TM 5. Remote Sensing of Environment 90:434–440, 2004: пиксель с NDVI < 0,2 считается открытой почвой, > 0,5 — сплошной растительностью"
+  url: "https://doi.org/10.1016/j.rse.2004.02.003"
+  note: "Проверено только по выдержке, полный текст не прочитан"
+
+dvorakova_2021:
+  name: "Dvorakova K., Heiden U., van Wesemael B. Remote Sensing 13:1791, 2021 (композиты открытой почвы Sentinel-2 для оценки органического углерода): открытая почва — NDVI < 0,25"
+  url: "https://doi.org/10.3390/rs13091791"
+  note: "Проверено только по выдержке, полный текст не прочитан; точное название статьи не сверено"
+
+lamb_2022:
+  name: "Lamb B.T., Dennison P.E., Hively W.D., Kokaly R.F., Serbin G., Wu Z., Dabney P.W., Masek J.G., Campbell M., Daughtry C.S.T. Optimizing Landsat Next shortwave infrared bands for crop residue characterization. Remote Sensing 14:6128, 2022: выборка NDVI < 0,3 — сцены без заметной зелёной растительности, на которых оценивают покрытие пожнивными остатками"
+  url: "https://doi.org/10.3390/rs14236128"
+  note: "Проверено только по выдержке, полный текст не прочитан"
+
+daughtry_residue:
+  name: "Daughtry C.S.T. et al. Assessing crop residue cover using shortwave infrared reflectance. Remote Sensing of Environment, 2004: покрытие пожнивными остатками не связано с NDVI; остатки отличимы от почвы по поглощению около 2100 нм (индекс CAI)"
+  url: "https://agris.fao.org/search/en/records/65df44dc0f3e94b9e5d6cb99"
+  note: "Проверено только по выдержке, полный текст не прочитан; том и страницы не сверены"
+
+bilbro_fryrear_1994:
+  name: "Bilbro J.D., Fryrear D.W. Wind erosion losses as related to plant silhouette and soil cover. Agronomy Journal, 1994: стоящие и лежащие растительные остатки снижают потери почвы от ветра (отношение потерь SLR по силуэту и покрытию)"
+  url: "https://data.zhenzhi.com/details/1/985671799"
+  note: "Проверено только по выдержке, полный текст не прочитан; DOI не найден"
+
+reichle_koster_2004:
+  name: "Reichle R.H., Koster R.D. Bias reduction in short records of satellite soil moisture. Geophysical Research Letters 31, 2004: согласование спутниковой и модельной влажности почвы сопоставлением функций распределения (CDF matching)"
+  url: "https://doi.org/10.1029/2004GL020938"
+  note: "Проверено только по выдержке, полный текст не прочитан (аннотация)"
+
+gmao_merra2_faq:
+  name: "GMAO, MERRA-2 FAQ: SFMC = пористость × GWETTOP (слой 0–5 см); SNODP — высота снега в заснеженной части ячейки, средняя по ячейке = SNODP × FRSNO"
+  url: "https://gmao.gsfc.nasa.gov/gmao-products/merra-2/faq_merra-2/"
+  note: "Проверено только по выдержке, полный текст не прочитан"
+
+mod13_user_guide:
+  name: "Didan K. et al. MODIS Vegetation Index User's Guide (MOD13 Series), Collection 6.1: pixel_reliability 0 — хорошие данные, 1 — пригодные с оговорками, 2 — снег/лёд, 3 — облака, −1 — нет данных"
+  url: "https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf"
+  note: "Коды сверены по каталогу Google Earth Engine (MOD13Q1) и docstring backend/app/data_sources/modis.py; таблица в руководстве C6.1 не прочитана"
+
+power_parameters:
+  name: "NASA POWER, справочник параметров (ответ API, community AG, daily, запрос 14.11.2026): WS2M_MAX — максимальная часовая скорость ветра на 2 м, м/с; GWETTOP — влажность верхних 5 см, 0 — совсем сухо, 1 — насыщение; SNODP — высота снега, см; FRSNO — доля суши под снегом"
+  url: "https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=daily&parameters=WS2M_MAX,GWETTOP,SNODP,FRSNO"
+  note: "Сверено с ответом API при разработке"
+
+kz_harvest_reports:
+  name: "Сводки об окончании уборки зерновых по областям (новости по данным акиматов): Костанайская — завершена к 07.10.2022 (caravan.kz), 95,1 % площади на 16.10.2025 (inbusiness.kz); Акмолинская — завершена 26.10.2025 (zakon.kz, https://www.zakon.kz/sobytiia/6495657-akmolinskaya-oblast-sobrala-rekordnye-76-milliona-tonn-zerna.html; https://www.inbusiness.kz/ru/last/uborka-2025-s-kakimi-pokazatelyami-idut-k-finishu-dva-severnyh-regiona-rk)"
+  url: "https://www.caravan.kz/news/v-kostanajjskojj-oblasti-zavershili-uborochnye-raboty-zernovykh-i-zernobobovykh-kultur-882853/"
+  note: "Даты публикаций сверены 15.11.2026. Это новостные сводки за отдельные годы по всей области, а не агрономическая рекомендация и не многолетняя статистика"
+
+etccdi_indices:
+  name: "ETCCDI (CCl/CLIVAR/JCOMM Expert Team on Climate Change Detection and Indices), список 27 основных индексов: FD — число дней, когда минимальная суточная температура ниже 0 °C"
+  url: "https://etccdi.pacificclimate.org/list_27_indices.shtml"
+  note: "Определение приведено по памяти: в контейнере хакатона страница недоступна (сетевая политика). Сверить"
+
+# ---------------------------------------------------------------- окна сева и уборки (crops.yaml, планировщик)
+kazhydromet_sowing_2025:
+  name: "РГП «Казгидромет», Управление агрометеорологического прогнозирования. Окончательный прогноз оптимальных сроков сева яровых зерновых культур по территории Казахстана весной 2025 года, табл. 2: Шортанды 14.05–24.05, Атбасар 11.05–21.05, Акколь 14.05–24.05, Костанай 13.05–23.05, Карабалык 17.05–27.05; «прогнозируются несколько раньше установленных климатических сроков»"
+  url: "https://kazhydromet.kz/uploads/files_calendar/8211/file/68149e8f99317okonchatelnyy-prognoz-srokov-seva-2025-g_.pdf"
+  note: "Текст PDF прочитан 15.11.2026 (pdftotext). Прогноз на один год, а не многолетняя агрономическая рекомендация"
+
+kazhydromet_maturation_2026:
+  name: "РГП «Казгидромет». Прогноз сроков созревания яровых зерновых культур в 2026 году по территории Казахстана (окончательный), табл. 1: даты сева и восковой спелости яровой пшеницы по постам — Шортанды 18.05 / 11.08, Атбасар 19.05 / 11.08, Костанай 24.05 / 07.08, Карабалык 22.05 / 10.08; в северных областях восковая спелость в основном в первой половине августа, в обычные сроки"
+  url: "https://kazhydromet.kz/uploads/files_calendar/12253/file/6a697347e3ef3prognoz-sozrevaniya-okonchatelnyy-za-2026-g.pdf"
+  note: "Текст PDF прочитан 15.11.2026 (pdftotext). Один год наблюдений; даты уборки в документе нет — только сев и восковая спелость"

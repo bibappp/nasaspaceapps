@@ -1,0 +1,87 @@
+# Шаблоны объяснений «простыми словами». Тексты собираются из сработавших правил, без LLM.
+# Казахский перевод требует вычитки носителем языка.
+
+legume_then_cereal:
+  ru: "Предшественник — {prev}: бобовая культура берёт азот из воздуха и оставляет его в почве. Поэтому {crop} в {year} году даст примерно на {pct} % больше, чем по зерновому предшественнику."
+  kk: "Алғы дақыл — {prev}: бұршақ дақылы азотты ауадан алып, топырақта қалдырады. Сондықтан {year} жылы {crop} астық алғы дақылына қарағанда шамамен {pct} % артық өнім береді."
+  en: "Previous crop — {prev}: a legume takes nitrogen from the air and leaves it in the soil. So {crop} in {year} should yield about {pct} % more than after a cereal."
+
+break_crop:
+  ru: "Предшественник — {prev}: смена культуры прерывает цикл болезней и сорняков, и {crop} в {year} году даст примерно на {pct} % больше."
+  kk: "Алғы дақыл — {prev}: дақылды ауыстыру аурулар мен арамшөптердің циклін үзеді, сондықтан {year} жылы {crop} шамамен {pct} % артық өнім береді."
+  en: "Previous crop — {prev}: changing the crop breaks the disease and weed cycle, so {crop} in {year} should yield about {pct} % more."
+
+bad_predecessor:
+  ru: "Предшественник — {prev}: для культуры «{crop}» это неудачное соседство, в {year} году урожайность ниже примерно на {pct} %."
+  kk: "Алғы дақыл — {prev}: «{crop}» дақылы үшін бұл сәтсіз кезек, {year} жылы өнімділік шамамен {pct} % төмен."
+  en: "Previous crop — {prev}: a poor predecessor for {crop}; in {year} the yield is about {pct} % lower."
+
+monoculture:
+  ru: "{crop_cap} идёт {run}-й год подряд ({year}): накапливаются болезни и сорняки, урожайность ниже ещё на {pct} %, индекс почвы теряет дополнительные пункты."
+  kk: "{crop_cap} қатарынан {run}-жыл егіледі ({year}): аурулар мен арамшөптер жиналады, өнімділік тағы {pct} % төмендейді, топырақ индексі қосымша ұпай жоғалтады."
+  en: "{crop_cap} is grown for the {run}th year in a row ({year}): diseases and weeds build up, the yield is a further {pct} % lower and the soil index loses extra points."
+
+fallow_next:
+  ru: "Пар в {year} году дохода не даёт и теряет гумус (около {humus} т/га), зато запас влаги к посеву следующей культуры ({next}) больше примерно на {gain} % (+{mm} мм)."
+  kk: "{year} жылғы пар табыс бермейді және гумус жоғалтады (шамамен {humus} т/га), бірақ келесі дақылды ({next}) себер алдындағы ылғал қоры шамамен {gain} % артық (+{mm} мм)."
+  en: "Fallow in {year} brings no income and loses humus (about {humus} t/ha), but the moisture available at sowing of the next crop ({next}) is about {gain} % higher (+{mm} mm)."
+
+fallow_last:
+  ru: "Пар в {year} году дохода не даёт и теряет гумус (около {humus} т/га), но накапливает влагу для следующего сезона."
+  kk: "{year} жылғы пар табыс бермейді және гумус жоғалтады (шамамен {humus} т/га), бірақ келесі маусымға ылғал жинайды."
+  en: "Fallow in {year} brings no income and loses humus (about {humus} t/ha), but stores moisture for the next season."
+
+drought_compare:
+  ru: "Если год окажется засушливым, как {dry_year}-й, меньше всего урожая потеряет {best} (около {best_pct} %), больше всего — {worst} (около {worst_pct} %)."
+  kk: "Егер жыл {dry_year} жылғыдай құрғақ болса, өнімді ең аз жоғалтатын — {best} (шамамен {best_pct} %), ең көп жоғалтатын — {worst} (шамамен {worst_pct} %)."
+  en: "In a dry year like {dry_year}, {best} would lose the least yield (about {best_pct} %) and {worst} the most (about {worst_pct} %)."
+
+drought_single:
+  ru: "Если год окажется засушливым, как {dry_year}-й, {crop} потеряет около {pct} % урожая."
+  kk: "Егер жыл {dry_year} жылғыдай құрғақ болса, {crop} өнімнің шамамен {pct} %-ын жоғалтады."
+  en: "In a dry year like {dry_year}, {crop} would lose about {pct} % of its yield."
+
+water_deficit:
+  ru: "Самая влаголюбивая культура варианта — {crop}: на сезон нужно около {need} мм влаги, а поле в обычный год даёт около {water} мм."
+  kk: "Нұсқадағы ылғалды ең көп қажет ететін дақыл — {crop}: оған маусымда шамамен {need} мм ылғал керек, ал егістік қалыпты жылы шамамен {water} мм береді."
+  en: "The thirstiest crop in this rotation is {crop}: it needs about {need} mm of water per season, while the field provides about {water} mm in a normal year."
+
+nitrogen_positive:
+  ru: "Баланс азота за {n_years} положительный: около +{kg} кг на гектар."
+  kk: "{n_years}ғы азот балансы оң: гектарына шамамен +{kg} кг."
+  en: "The nitrogen balance over {n_years} is positive: about +{kg} kg per hectare."
+
+nitrogen_negative:
+  ru: "За {n_years} почва отдаст около {kg} кг азота с гектара (без учёта удобрений)."
+  kk: "{n_years}да топырақ гектарынан шамамен {kg} кг азот береді (тыңайтқыштарды есепке алмағанда)."
+  en: "Over {n_years} the soil would lose about {kg} kg of nitrogen per hectare (fertiliser not included)."
+
+humus:
+  ru: "Запас гумуса за {n_years} изменится примерно на {t} т/га."
+  kk: "{n_years}да гумус қоры шамамен {t} т/га-ға өзгереді."
+  en: "Soil humus over {n_years} would change by about {t} t/ha."
+
+income_more:
+  ru: "Доход за {n_years} — около {income} тенге с гектара: на {diff} тенге/га больше, чем вариант «{base}»."
+  kk: "{n_years}ғы табыс — гектарынан шамамен {income} теңге: «{base}» нұсқасынан {diff} теңге/га артық."
+  en: "Gross margin over {n_years}: about {income} tenge per hectare, {diff} tenge/ha more than «{base}»."
+
+income_less:
+  ru: "Доход за {n_years} — около {income} тенге с гектара: на {diff} тенге/га меньше, чем вариант «{base}»."
+  kk: "{n_years}ғы табыс — гектарынан шамамен {income} теңге: «{base}» нұсқасынан {diff} теңге/га кем."
+  en: "Gross margin over {n_years}: about {income} tenge per hectare, {diff} tenge/ha less than «{base}»."
+
+income_base:
+  ru: "Доход за {n_years} — около {income} тенге с гектара. С этим вариантом сравниваются остальные."
+  kk: "{n_years}ғы табыс — гектарынан шамамен {income} теңге. Қалған нұсқалар осы нұсқамен салыстырылады."
+  en: "Gross margin over {n_years}: about {income} tenge per hectare. Other rotations are compared with this one."
+
+fits_priority:
+  ru: "По выбранному приоритету «{priority}» у этого варианта самый высокий взвешенный балл: {score} из 5. Остальные варианты тоже остаются на выбор — решение за вами."
+  kk: "Таңдалған «{priority}» басымдығы бойынша бұл нұсқаның өлшенген ұпайы ең жоғары: 5-тен {score}. Қалған нұсқалар да таңдауда қалады — шешім өзіңізде."
+  en: "For the selected priority «{priority}» this rotation has the highest weighted score: {score} out of 5. The other rotations remain options — the decision is yours."
+
+assumptions:
+  ru: "В расчёте этого варианта {n_assumptions} из {n_params} значений пока не подтверждены источником для Северного Казахстана и требуют проверки агрономом."
+  kk: "Бұл нұсқаның есебіндегі {n_params} мәннің {n_assumptions}-і Солтүстік Қазақстан үшін дереккөзбен әлі расталмаған және агрономның тексеруін қажет етеді."
+  en: "{n_assumptions} of the {n_params} values used for this rotation are not yet confirmed by a source for Northern Kazakhstan and should be checked by an agronomist."

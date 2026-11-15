@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { -webkit-text-size-adjust: 100%; }
+body { @apply bg-surface text-ink antialiased; font-feature-settings: "cv11", "ss01"; }
+a { @apply text-field-700 underline-offset-2 hover:underline; overflow-wrap: anywhere; }
+:focus-visible { outline: 2px solid #2E6B47; outline-offset: 2px; }
+::selection { background: #C4DACB; }
+
+@layer components {
+  /* поверхности */
+  .card { @apply rounded-lg border border-line bg-white p-4 shadow-sm sm:p-5; }
+  .panel { @apply rounded-lg border border-line bg-white shadow-sm; }
+  .panel-head { @apply flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3 sm:px-5; }
+  .panel-body { @apply p-4 sm:p-5; }
+
+  /* кнопки */
+  .btn { @apply inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md px-3.5 text-sm font-medium no-underline transition-colors hover:no-underline disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-field-700 text-white hover:bg-field-800; }
+  .btn-secondary { @apply btn border border-line-strong bg-white text-ink hover:bg-surface-sunken; }
+  .btn-ghost { @apply btn text-ink-2 hover:bg-surface-sunken; }
+  .btn-danger { @apply btn border border-red-200 bg-white text-status-bad hover:bg-red-50; }
+  .btn-lg { @apply h-11 px-5 text-[15px]; }
+  .btn-icon { @apply btn h-8 w-8 px-0; }
+
+  /* формы */
+  .input { @apply h-10 w-full rounded-md border border-line-strong bg-white px-3 text-sm text-ink placeholder:text-ink-subtle focus:border-field-600 focus:outline-none focus:ring-2 focus:ring-field-100; }
+  textarea.input { @apply h-auto py-2; }
+  .label { @apply mb-1.5 block text-sm font-medium text-ink-2; }
+  .hint { @apply mt-1 text-xs text-ink-muted; }
+
+  /* типографика */
+  .h1 { @apply text-2xl font-semibold tracking-tight text-ink; }
+  .h2 { @apply text-lg font-semibold tracking-tight text-ink; }
+  .h3 { @apply text-[15px] font-semibold text-ink; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-wider text-ink-muted; }
+  .muted { @apply text-sm text-ink-muted; }
+
+  /* таблицы */
+  .table { @apply w-full text-left text-sm; }
+  .table th { @apply border-b border-line bg-surface px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-muted; }
+  .table td { @apply border-b border-line px-3 py-2.5 align-top; }
+  .table tr:last-child td { @apply border-b-0; }
+  .num { @apply text-right tabular-nums; }
+
+  /* значки */
+  .badge { @apply inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-medium; }
+  .badge-neutral { @apply badge bg-surface-sunken text-ink-2; }
+  .badge-green { @apply badge bg-field-50 text-field-800 ring-1 ring-inset ring-field-200; }
+  .badge-amber { @apply badge bg-amber-50 text-amber-800 ring-1 ring-inset ring-amber-200; }
+  .badge-red { @apply badge bg-red-50 text-red-800 ring-1 ring-inset ring-red-200; }
+  .badge-blue { @apply badge bg-blue-50 text-blue-800 ring-1 ring-inset ring-blue-200; }
+}
+
+.leaflet-container { font: inherit; background: #EEF1EF; }
+.recharts-cartesian-axis-tick-value { font-size: 12px; fill: #5B6470; }
+
+/* элементы сетки могут сжиматься: широкие таблицы прокручиваются внутри своей панели, а не растягивают страницу */
+.grid > * { min-width: 0; }

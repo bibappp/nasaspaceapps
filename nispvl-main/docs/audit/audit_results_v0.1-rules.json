@@ -1,0 +1,964 @@
+{
+ "run_date": "2026-11-12",
+ "start_year": 2027,
+ "field": {
+  "area_ha": 313.5,
+  "centroid": {
+   "lat": 51.68569,
+   "lon": 70.93175
+  }
+ },
+ "conditions": {
+  "region": "akmola",
+  "area_ha": 313.53,
+  "p_season_normal": 143.9,
+  "stock_normal": 109.8,
+  "p_season_dry": 122.0,
+  "stock_dry": 119.3,
+  "dry_year": 2021,
+  "p_season_ref": 154.1,
+  "stock_ref": 120.0,
+  "awc_mm": 138.0,
+  "moisture_basis": "smap"
+ },
+ "drought": {
+  "dry_years": [
+   2008,
+   2010,
+   2017,
+   2021,
+   2022,
+   2023
+  ],
+  "window": [
+   2002,
+   2026
+  ],
+  "p20_mm": 125.6,
+  "share": 0.24
+ },
+ "checks": [
+  {
+   "check": "Засушливые годы: независимый пересчёт совпадает",
+   "ok": true,
+   "detail": "пересчёт [2008, 2010, 2017, 2021, 2022, 2023] / модель [2008, 2010, 2017, 2021, 2022, 2023]; порог P20 = 125.6 мм; норма 157.4 ± 42.6 мм"
+  },
+  {
+   "check": "Осадки май–август в обычный год (медиана 25 лет)",
+   "ok": true,
+   "detail": "пересчёт 143.9 мм / модель 143.9 мм"
+  },
+  {
+   "check": "Год стресс-теста засушлив по данным поля",
+   "ok": true,
+   "detail": "2021: 122.0 мм"
+  },
+  {
+   "check": "Обычный запас влаги к посеву",
+   "ok": true,
+   "detail": "пересчёт 109.8 мм / модель 109.8 мм (основа: SMAP апрель–май)"
+  },
+  {
+   "check": "Запас влаги в засушливый год",
+   "ok": true,
+   "detail": "пересчёт 119.3 мм / модель 119.3 мм"
+  },
+  {
+   "check": "Баланс азота и гумуса: wheat_mono",
+   "ok": true,
+   "detail": "N -100 кг/га, гумус -2.00 т/га за 4 года"
+  },
+  {
+   "check": "Баланс азота и гумуса: lentil_flax",
+   "ok": true,
+   "detail": "N -60 кг/га, гумус -1.80 т/га за 4 года"
+  },
+  {
+   "check": "Баланс азота и гумуса: pea_rapeseed_fallow",
+   "ok": true,
+   "detail": "N -35 кг/га, гумус -2.80 т/га за 4 года"
+  },
+  {
+   "check": "Баланс азота и гумуса: chickpea_sunflower",
+   "ok": true,
+   "detail": "N -70 кг/га, гумус -2.30 т/га за 4 года"
+  },
+  {
+   "check": "Урожайность, доход и индекс почвы по годам совпадают с независимым пересчётом",
+   "ok": true,
+   "detail": "максимальное расхождение 0.0004 (т/га, тыс. тг/га или пункты; округление модели)"
+  },
+  {
+   "check": "После любой бобовой пшеница не хуже, чем по пшенице",
+   "ok": true,
+   "detail": "lentil: +18 %, pea: +26 %, chickpea: +10 %"
+  },
+  {
+   "check": "Повтор той же культуры (кроме зерновых — для них штраф монокультуры) не даёт прибавки",
+   "ok": true,
+   "detail": "wheat: +0, lentil: -15, pea: -15, chickpea: -15, flax: -15, rapeseed: -15, sunflower: -15, fallow: +0"
+  },
+  {
+   "check": "Пар как предшественник не задан эффектом урожайности (учтён через влагу)",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "predecessor_matrix": {
+  "wheat": {
+   "wheat": 0.0,
+   "lentil": 0.0,
+   "pea": 0.0,
+   "chickpea": 0.0,
+   "flax": 0.0,
+   "rapeseed": 0.0,
+   "sunflower": 0.0,
+   "fallow": 0.0
+  },
+  "lentil": {
+   "wheat": 18.0,
+   "lentil": -15.0,
+   "pea": -10.0,
+   "chickpea": -10.0,
+   "flax": 0.0,
+   "rapeseed": 0.0,
+   "sunflower": 0.0,
+   "fallow": 0.0
+  },
+  "pea": {
+   "wheat": 26.0,
+   "lentil": -10.0,
+   "pea": -15.0,
+   "chickpea": -10.0,
+   "flax": 0.0,
+   "rapeseed": 0.0,
+   "sunflower": 0.0,
+   "fallow": 0.0
+  },
+  "chickpea": {
+   "wheat": 10.0,
+   "lentil": -10.0,
+   "pea": -10.0,
+   "chickpea": -15.0,
+   "flax": 0.0,
+   "rapeseed": 0.0,
+   "sunflower": 0.0,
+   "fallow": 0.0
+  },
+  "flax": {
+   "wheat": 10.0,
+   "lentil": 0.0,
+   "pea": 0.0,
+   "chickpea": 0.0,
+   "flax": -15.0,
+   "rapeseed": -10.0,
+   "sunflower": -10.0,
+   "fallow": 0.0
+  },
+  "rapeseed": {
+   "wheat": 10.0,
+   "lentil": 0.0,
+   "pea": 0.0,
+   "chickpea": 0.0,
+   "flax": -10.0,
+   "rapeseed": -15.0,
+   "sunflower": -10.0,
+   "fallow": 0.0
+  },
+  "sunflower": {
+   "wheat": -10.0,
+   "lentil": 0.0,
+   "pea": 0.0,
+   "chickpea": 0.0,
+   "flax": -10.0,
+   "rapeseed": -10.0,
+   "sunflower": -15.0,
+   "fallow": 0.0
+  },
+  "fallow": {
+   "wheat": 0.0,
+   "lentil": 0.0,
+   "pea": 0.0,
+   "chickpea": 0.0,
+   "flax": 0.0,
+   "rapeseed": 0.0,
+   "sunflower": 0.0,
+   "fallow": 0.0
+  }
+ },
+ "ndvi_validation": {
+  "years": [
+   2000,
+   2001,
+   2002,
+   2003,
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2011,
+   2012,
+   2013,
+   2014,
+   2015,
+   2016,
+   2017,
+   2018,
+   2019,
+   2020,
+   2021,
+   2022,
+   2023,
+   2024,
+   2025,
+   2026
+  ],
+  "ndvi_max": [
+   0.5714,
+   0.7559,
+   0.7126,
+   0.5248,
+   0.3584,
+   0.7026,
+   0.7439,
+   0.5321,
+   0.4547,
+   0.5315,
+   0.3282,
+   0.6654,
+   0.3381,
+   0.6998,
+   0.4452,
+   0.6204,
+   0.622,
+   0.556,
+   0.5915,
+   0.4948,
+   0.6687,
+   0.5019,
+   0.5541,
+   0.4762,
+   0.7656,
+   0.6092,
+   0.595
+  ],
+  "precip": [
+   142.52000000000004,
+   171.58000000000007,
+   126.44000000000001,
+   170.63,
+   134.14999999999998,
+   193.66999999999993,
+   137.03000000000003,
+   138.72,
+   118.16000000000003,
+   210.71,
+   90.1,
+   203.76,
+   128.44000000000003,
+   235.84,
+   144.54000000000005,
+   227.37000000000003,
+   185.73999999999998,
+   122.44,
+   247.09,
+   138.11,
+   143.92999999999998,
+   122.00000000000001,
+   120.72,
+   89.89999999999998,
+   344.84,
+   219.16,
+   148.37
+  ],
+  "pearson_precip_ndvi": [
+   0.563,
+   0.0022
+  ],
+  "spearman_precip_ndvi": [
+   0.57,
+   0.0019
+  ],
+  "pearson_water_ndvi": [
+   0.6,
+   0.0009
+  ],
+  "n_water": 27,
+  "dry_vs_other": {
+   "dry_mean": 0.479,
+   "other_mean": 0.598,
+   "n_dry": 6,
+   "n_other": 21,
+   "mannwhitney_p_less": 0.0109
+  }
+ },
+ "hindcast": {
+  "years": [
+   2002,
+   2003,
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2011,
+   2012,
+   2013,
+   2014,
+   2015,
+   2016,
+   2017,
+   2018,
+   2019,
+   2020,
+   2021,
+   2022,
+   2023,
+   2024,
+   2025,
+   2026
+  ],
+  "model_rel": [
+   1.059,
+   1.089,
+   0.874,
+   1.318,
+   0.864,
+   1.097,
+   0.757,
+   1.258,
+   0.697,
+   1.184,
+   0.758,
+   1.66,
+   0.902,
+   1.614,
+   1.207,
+   0.882,
+   1.722,
+   1.123,
+   1.06,
+   0.932,
+   0.815,
+   0.643,
+   2.259,
+   1.498,
+   1.044
+  ],
+  "ndvi_rel": [
+   1.282,
+   0.944,
+   0.645,
+   1.264,
+   1.338,
+   0.957,
+   0.818,
+   0.956,
+   0.59,
+   1.197,
+   0.608,
+   1.259,
+   0.801,
+   1.116,
+   1.119,
+   1.0,
+   1.064,
+   0.89,
+   1.203,
+   0.903,
+   0.997,
+   0.856,
+   1.377,
+   1.096,
+   1.07
+  ],
+  "pearson": 0.623,
+  "cv_model": 0.328,
+  "cv_ndvi": 0.213,
+  "dry_mean_model": 0.788,
+  "dry_mean_ndvi": 0.861
+ },
+ "sensitivity": [
+  {
+   "case": "Базовые правила",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 82408,
+    "pea_rapeseed_fallow": 57050,
+    "chickpea_sunflower": 99755
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Цена пшеницы 92 тыс. тг/т",
+   "income": {
+    "wheat_mono": 58108,
+    "lentil_flax": 128277,
+    "pea_rapeseed_fallow": 76897,
+    "chickpea_sunflower": 139449
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.7,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.3
+   }
+  },
+  {
+   "case": "Цена пшеницы 104 тыс. тг/т",
+   "income": {
+    "wheat_mono": 96992,
+    "lentil_flax": 150743,
+    "pea_rapeseed_fallow": 86618,
+    "chickpea_sunflower": 158891
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "wheat_mono",
+    "pea_rapeseed_fallow"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.8,
+    "pea_rapeseed_fallow": 5.8,
+    "chickpea_sunflower": 5.4
+   }
+  },
+  {
+   "case": "Цена пшеницы 115 тыс. тг/т",
+   "income": {
+    "wheat_mono": 132636,
+    "lentil_flax": 171337,
+    "pea_rapeseed_fallow": 95529,
+    "chickpea_sunflower": 176713
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "wheat_mono",
+    "pea_rapeseed_fallow"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.8,
+    "pea_rapeseed_fallow": 5.8,
+    "chickpea_sunflower": 5.4
+   }
+  },
+  {
+   "case": "Пшеница после гороха +0 %",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 82408,
+    "pea_rapeseed_fallow": 57050,
+    "chickpea_sunflower": 99755
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Пшеница после гороха +15 %",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 82408,
+    "pea_rapeseed_fallow": 57050,
+    "chickpea_sunflower": 99755
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Пшеница после гороха +36 %",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 82408,
+    "pea_rapeseed_fallow": 57050,
+    "chickpea_sunflower": 99755
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Пшеница после чечевицы 0 % (полное азотное питание, Zentner 1997)",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 71472,
+    "pea_rapeseed_fallow": 57050,
+    "chickpea_sunflower": 99755
+   },
+   "best_weighted": "chickpea_sunflower",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.5,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Эффекты бобовых предшественников = 0",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 71472,
+    "pea_rapeseed_fallow": 57050,
+    "chickpea_sunflower": 99755
+   },
+   "best_weighted": "chickpea_sunflower",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.5,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Потребность пшеницы во влаге 400 мм",
+   "income": {
+    "wheat_mono": -19116,
+    "lentil_flax": 83658,
+    "pea_rapeseed_fallow": 57591,
+    "chickpea_sunflower": 100837
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.2,
+    "lentil_flax": 5.3,
+    "pea_rapeseed_fallow": 5.5,
+    "chickpea_sunflower": 4.9
+   }
+  },
+  {
+   "case": "Затраты всех культур +30 %",
+   "income": {
+    "wheat_mono": -93280,
+    "lentil_flax": -92,
+    "pea_rapeseed_fallow": -14950,
+    "chickpea_sunflower": 15755
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Урожайность всех культур −20 %",
+   "income": {
+    "wheat_mono": -65024,
+    "lentil_flax": 10926,
+    "pea_rapeseed_fallow": -2360,
+    "chickpea_sunflower": 23803
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.1
+   }
+  },
+  {
+   "case": "Урожайность всех культур, кроме пшеницы, −20 %",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": 36200,
+    "pea_rapeseed_fallow": 8576,
+    "chickpea_sunflower": 45675
+   },
+   "best_weighted": "lentil_flax",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "pea_rapeseed_fallow",
+    "wheat_mono"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.7,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.2
+   }
+  },
+  {
+   "case": "Консервативный: без эффекта бобовых, альтернативы −20 % урожая и +30 % затрат",
+   "income": {
+    "wheat_mono": -21280,
+    "lentil_flax": -21236,
+    "pea_rapeseed_fallow": -40924,
+    "chickpea_sunflower": -2325
+   },
+   "best_weighted": "chickpea_sunflower",
+   "income_ranking": [
+    "chickpea_sunflower",
+    "lentil_flax",
+    "wheat_mono",
+    "pea_rapeseed_fallow"
+   ],
+   "loss_pct": {
+    "wheat_mono": 6.8,
+    "lentil_flax": 5.6,
+    "pea_rapeseed_fallow": 5.7,
+    "chickpea_sunflower": 5.2
+   }
+  }
+ ],
+ "variants": {
+  "wheat_mono": {
+   "crops": [
+    "wheat",
+    "wheat",
+    "wheat",
+    "wheat"
+   ],
+   "totals": {
+    "income_kzt_ha": -21280,
+    "income_per_year_kzt_ha": -5320,
+    "income_field_kzt": -6671918,
+    "revenue_kzt_ha": 218720,
+    "nitrogen_kg_ha": -100.0,
+    "humus_t_ha": -2.0,
+    "soil_index_end": 74.0,
+    "soil_index_change": -26.0,
+    "water_deficit_mean_mm": 296.3,
+    "monoculture_years": 4,
+    "drought_loss_pct": 6.8,
+    "drought_loss_mean_kzt_ha": 3726
+   },
+   "years": [
+    {
+     "year": 2027,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    },
+    {
+     "year": 2028,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    },
+    {
+     "year": 2029,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    },
+    {
+     "year": 2030,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    }
+   ]
+  },
+  "lentil_flax": {
+   "crops": [
+    "wheat",
+    "lentil",
+    "wheat",
+    "flax"
+   ],
+   "totals": {
+    "income_kzt_ha": 82408,
+    "income_per_year_kzt_ha": 20602,
+    "income_field_kzt": 25837380,
+    "revenue_kzt_ha": 357408,
+    "nitrogen_kg_ha": -60.0,
+    "humus_t_ha": -1.8,
+    "soil_index_end": 84.8,
+    "soil_index_change": -15.2,
+    "water_deficit_mean_mm": 233.8,
+    "monoculture_years": 1,
+    "drought_loss_pct": 5.6,
+    "drought_loss_mean_kzt_ha": 4976
+   },
+   "years": [
+    {
+     "year": 2027,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    },
+    {
+     "year": 2028,
+     "crop": "lentil",
+     "yield_t_ha": 0.758,
+     "yield_dry_t_ha": 0.721,
+     "income_kzt_ha": 16272,
+     "moisture_coef": 0.926,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    },
+    {
+     "year": 2029,
+     "crop": "wheat",
+     "yield_t_ha": 1.062,
+     "yield_dry_t_ha": 0.99,
+     "income_kzt_ha": 11692,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 18.0,
+     "monoculture_penalty_pct": 0.0
+    },
+    {
+     "year": 2030,
+     "crop": "flax",
+     "yield_t_ha": 0.674,
+     "yield_dry_t_ha": 0.641,
+     "income_kzt_ha": 59764,
+     "moisture_coef": 0.926,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    }
+   ]
+  },
+  "pea_rapeseed_fallow": {
+   "crops": [
+    "wheat",
+    "pea",
+    "rapeseed",
+    "fallow"
+   ],
+   "totals": {
+    "income_kzt_ha": 57050,
+    "income_per_year_kzt_ha": 14262,
+    "income_field_kzt": 17886886,
+    "revenue_kzt_ha": 297050,
+    "nitrogen_kg_ha": -35.0,
+    "humus_t_ha": -2.8,
+    "soil_index_end": 83.3,
+    "soil_index_change": -16.7,
+    "water_deficit_mean_mm": 178.5,
+    "monoculture_years": 1,
+    "drought_loss_pct": 5.7,
+    "drought_loss_mean_kzt_ha": 4203
+   },
+   "years": [
+    {
+     "year": 2027,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    },
+    {
+     "year": 2028,
+     "crop": "pea",
+     "yield_t_ha": 0.908,
+     "yield_dry_t_ha": 0.851,
+     "income_kzt_ha": 20761,
+     "moisture_coef": 0.907,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    },
+    {
+     "year": 2029,
+     "crop": "rapeseed",
+     "yield_t_ha": 0.758,
+     "yield_dry_t_ha": 0.721,
+     "income_kzt_ha": 56609,
+     "moisture_coef": 0.926,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    },
+    {
+     "year": 2030,
+     "crop": "fallow",
+     "yield_t_ha": 0.0,
+     "yield_dry_t_ha": 0.0,
+     "income_kzt_ha": -15000,
+     "moisture_coef": 1.0,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    }
+   ]
+  },
+  "chickpea_sunflower": {
+   "crops": [
+    "wheat",
+    "chickpea",
+    "sunflower",
+    "wheat"
+   ],
+   "totals": {
+    "income_kzt_ha": 99755,
+    "income_per_year_kzt_ha": 24939,
+    "income_field_kzt": 31276185,
+    "revenue_kzt_ha": 379755,
+    "nitrogen_kg_ha": -70.0,
+    "humus_t_ha": -2.3,
+    "soil_index_end": 81.8,
+    "soil_index_change": -18.2,
+    "water_deficit_mean_mm": 321.3,
+    "monoculture_years": 1,
+    "drought_loss_pct": 5.1,
+    "drought_loss_mean_kzt_ha": 4872
+   },
+   "years": [
+    {
+     "year": 2027,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": -10.0
+    },
+    {
+     "year": 2028,
+     "crop": "chickpea",
+     "yield_t_ha": 0.674,
+     "yield_dry_t_ha": 0.641,
+     "income_kzt_ha": 26073,
+     "moisture_coef": 0.926,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    },
+    {
+     "year": 2029,
+     "crop": "sunflower",
+     "yield_t_ha": 0.766,
+     "yield_dry_t_ha": 0.734,
+     "income_kzt_ha": 84322,
+     "moisture_coef": 0.935,
+     "predecessor_effect_pct": 0.0,
+     "monoculture_penalty_pct": 0.0
+    },
+    {
+     "year": 2030,
+     "crop": "wheat",
+     "yield_t_ha": 0.81,
+     "yield_dry_t_ha": 0.755,
+     "income_kzt_ha": -5320,
+     "moisture_coef": 0.899,
+     "predecessor_effect_pct": -10.0,
+     "monoculture_penalty_pct": 0.0
+    }
+   ]
+  }
+ },
+ "rule_counts": {
+  "total": 88,
+  "verified": 14,
+  "by_evidence": {
+   "literature": 0,
+   "agronomist_review": 0,
+   "preliminary": 0,
+   "definition": 0
+  }
+ }
+}

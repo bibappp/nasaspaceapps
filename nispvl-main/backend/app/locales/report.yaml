@@ -1,0 +1,217 @@
+# Строки PDF-отчёта. Казахский перевод требует вычитки носителем языка.
+
+brand: {ru: "Агро-Севооборот", kk: "Агро-Ауыспалы егіс", en: "Agro-Sevooborot"}
+brand_tagline: {ru: "Поддержка решений по севообороту на основе данных NASA", kk: "NASA деректеріне негізделген ауыспалы егіс шешімдерін қолдау", en: "Crop rotation decision support powered by NASA Earth data"}
+title: {ru: "Отчёт по севообороту поля", kk: "Егістіктің ауыспалы егіс есебі", en: "Field crop rotation report"}
+subtitle: {ru: "Агро-Севооборот — инструмент поддержки решений", kk: "Агро-Ауыспалы егіс — шешім қабылдауды қолдау құралы", en: "Agro-Sevooborot — decision-support tool"}
+date: {ru: "Дата составления", kk: "Жасалған күні", en: "Report date"}
+prepared_for: {ru: "Хозяйство", kk: "Шаруашылық", en: "Farm"}
+disclaimer:
+  ru: "Это инструмент поддержки решений. Окончательное решение принимает фермер. Перед посевом посоветуйтесь с агрономом."
+  kk: "Бұл — шешім қабылдауды қолдау құралы. Түпкілікті шешімді фермер қабылдайды. Егіс алдында агрономмен кеңесіңіз."
+  en: "This is a decision-support tool. The final decision rests with the farmer. Consult an agronomist before sowing."
+cover_note:
+  ru: "Все числа и графики в отчёте рассчитаны по данным этого поля (NASA POWER, MODIS, SMAP, ISRIC SoilGrids) и по правилам модели с указанными источниками. Это исторические наблюдения и модельные оценки, а не прогноз погоды."
+  kk: "Есептегі барлық сандар мен графиктер осы егістіктің деректері (NASA POWER, MODIS, SMAP, ISRIC SoilGrids) және дереккөздері көрсетілген модель ережелері бойынша есептелген. Бұл — ауа райы болжамы емес, тарихи бақылаулар мен модельдік бағалаулар."
+  en: "All figures and charts are computed from this field's data (NASA POWER, MODIS, SMAP, ISRIC SoilGrids) and from model rules with stated sources. They are historical observations and model estimates, not a weather forecast."
+page: {ru: "стр.", kk: "бет", en: "page"}
+contents: {ru: "Содержание", kk: "Мазмұны", en: "Contents"}
+
+# --- разделы
+s_summary: {ru: "Краткие выводы", kk: "Қысқаша қорытынды", en: "Summary of findings"}
+s_field: {ru: "Поле", kk: "Егістік", en: "Field"}
+s_data: {ru: "Данные и источники", kk: "Деректер мен дереккөздер", en: "Data and sources"}
+s_vegetation: {ru: "Вегетация (NDVI)", kk: "Вегетация (NDVI)", en: "Vegetation (NDVI)"}
+s_water: {ru: "Осадки и влажность почвы", kk: "Жауын-шашын және топырақ ылғалдылығы", en: "Precipitation and soil moisture"}
+s_risk: {ru: "Исторические тенденции и риски", kk: "Тарихи үрдістер мен тәуекелдер", en: "Historical trends and risks"}
+s_compare: {ru: "Сравнение сценариев севооборота", kk: "Ауыспалы егіс сценарийлерін салыстыру", en: "Crop rotation scenario comparison"}
+s_assess: {ru: "Оценки: почва, вода, экономика, риск", kk: "Бағалар: топырақ, су, экономика, тәуекел", en: "Assessments: soil, water, economics, risk"}
+s_forecast: {ru: "Многолетняя симуляция", kk: "Көпжылдық модельдеу", en: "Multi-year simulation"}
+s_stress: {ru: "Стресс-тест «А если засуха?»", kk: "«Құрғақшылық болса ше?» стресс-тесті", en: "Stress test: what if there is a drought?"}
+s_recommended: {ru: "Сценарий, лучше всего подходящий приоритетам", kk: "Басымдықтарға ең сәйкес сценарий", en: "Scenario that best fits the priorities"}
+s_assumptions: {ru: "Допущения модели", kk: "Модель болжамдары", en: "Model assumptions"}
+s_limitations: {ru: "Научные ограничения", kk: "Ғылыми шектеулер", en: "Scientific limitations"}
+s_references: {ru: "Источники и литература", kk: "Дереккөздер мен әдебиет", en: "Sources and references"}
+s_sign: {ru: "Подписи", kk: "Қолдар", en: "Signatures"}
+
+# --- поле
+farm: {ru: "Хозяйство", kk: "Шаруашылық", en: "Farm"}
+field_name: {ru: "Поле", kk: "Егістік", en: "Field"}
+area: {ru: "Площадь", kk: "Ауданы", en: "Area"}
+ha: {ru: "га", kk: "га", en: "ha"}
+region: {ru: "Область", kk: "Облыс", en: "Region"}
+centroid: {ru: "Центр поля (широта, долгота)", kk: "Егістік ортасы (ендік, бойлық)", en: "Field centre (lat, lon)"}
+bbox: {ru: "Границы (мин./макс. долгота и широта)", kk: "Шекаралар (бойлық пен ендіктің мин./макс.)", en: "Bounding box (min/max lon and lat)"}
+history: {ru: "История культур", kk: "Дақылдар тарихы", en: "Crop history"}
+history_scenario: {ru: "История — учебный сценарий, фактические посевы не проверялись.", kk: "Тарих — оқу сценарийі, нақты егістер тексерілмеген.", en: "History is a training scenario; actual crops were not verified."}
+soil_user: {ru: "Почва (данные хозяйства)", kk: "Топырақ (шаруашылық деректері)", en: "Soil (farm records)"}
+soil_model: {ru: "Почва (SoilGrids, 0–30 см, модельная карта)", kk: "Топырақ (SoilGrids, 0–30 см, модельдік карта)", en: "Soil (SoilGrids, 0–30 cm, modelled map)"}
+soil_value: {ru: "гумус ≈ {humus} %, глина {clay} %, песок {sand} %, pH {ph}; влагоёмкость метрового слоя ≈ {awc} мм", kk: "гумус ≈ {humus} %, саз {clay} %, құм {sand} %, pH {ph}; метрлік қабаттың ылғал сыйымдылығы ≈ {awc} мм", en: "humus ≈ {humus} %, clay {clay} %, sand {sand} %, pH {ph}; 1 m water-holding capacity ≈ {awc} mm"}
+soil_user_value: {ru: "гумус {humus} %, pH {ph}, гранулометрия: {texture}; обследование {year}", kk: "гумус {humus} %, pH {ph}, түйіршік құрамы: {texture}; зерттеу {year}", en: "humus {humus} %, pH {ph}, texture: {texture}; survey {year}"}
+notes: {ru: "Заметки", kk: "Ескертпелер", en: "Notes"}
+not_set: {ru: "не указано", kk: "көрсетілмеген", en: "not set"}
+map_caption: {ru: "Контур поля на фоне пикселей NDVI MODIS (композит {date}, пиксель ~232 м). Подложка-снимок не используется: карта построена только из данных.", kk: "MODIS NDVI пиксельдері аясындағы егістік контуры (композит {date}, пиксель ~232 м). Түсірілім-негіз пайдаланылмайды: карта тек деректерден құрылған.", en: "Field boundary over MODIS NDVI pixels (composite {date}, ~232 m pixel). No basemap image is used: the map is drawn from data only."}
+
+# --- данные
+col_dataset: {ru: "Набор данных", kk: "Деректер жиыны", en: "Dataset"}
+col_used: {ru: "Для чего", kk: "Не үшін", en: "Used for"}
+col_period: {ru: "Период наблюдений", kk: "Бақылау кезеңі", en: "Observation period"}
+col_resolution: {ru: "Разрешение", kk: "Ажыратымдылық", en: "Resolution"}
+col_origin: {ru: "Получение", kk: "Алынуы", en: "Retrieved"}
+origin_demo: {ru: "сохранённые демо-данные", kk: "сақталған демо-деректер", en: "stored demo data"}
+origin_cache: {ru: "из кэша", kk: "кэштен", en: "cache"}
+origin_live: {ru: "получены сейчас", kk: "қазір алынды", en: "retrieved now"}
+origin_fallback: {ru: "ЗАПАСНЫЕ ДАННЫЕ ДЕМО-ПОЛЯ", kk: "ДЕМО-ЕГІСТІКТІҢ ҚОСАЛҚЫ ДЕРЕКТЕРІ", en: "FALLBACK DEMO DATA"}
+origin_none: {ru: "недоступны", kk: "қолжетімсіз", en: "unavailable"}
+kind_observation: {ru: "наблюдение", kk: "бақылау", en: "observation"}
+kind_reanalysis: {ru: "реанализ", kk: "реанализ", en: "reanalysis"}
+kind_statistic: {ru: "статистика", kk: "статистика", en: "statistic"}
+kind_model: {ru: "модель", kk: "модель", en: "model"}
+
+# --- вегетация
+ndvi_trend_text: {ru: "Максимум NDVI за сезон {from_year}–{to_year}: тренд «{label}» (наклон {slope} в год, p = {p}).", kk: "{from_year}–{to_year} маусымдық ең жоғары NDVI: «{label}» тренді (жылына {slope} еңіс, p = {p}).", en: "Seasonal NDVI maximum {from_year}–{to_year}: trend «{label}» (slope {slope} per year, p = {p})."}
+ndvi_declining: {ru: "снижается", kk: "төмендеп келеді", en: "declining"}
+ndvi_stable: {ru: "стабилен", kk: "тұрақты", en: "stable"}
+ndvi_rising: {ru: "растёт", kk: "өсіп келеді", en: "rising"}
+ndvi_insufficient: {ru: "недостаточно данных", kk: "деректер жеткіліксіз", en: "insufficient data"}
+ndvi_missing: {ru: "Ряд NDVI для этого поля ещё не загружен.", kk: "Бұл егістіктің NDVI қатары әлі жүктелмеген.", en: "The NDVI series for this field has not been loaded yet."}
+ndvi_caveat: {ru: "NDVI отражает зелёную массу посевов, а не урожай; снижение NDVI само по себе не доказывает деградацию почвы или падение урожайности.", kk: "NDVI өнімді емес, егістің жасыл массасын көрсетеді; NDVI-дің төмендеуі өздігінен топырақтың тозуын немесе өнімділіктің құлдырауын дәлелдемейді.", en: "NDVI reflects green biomass, not yield; an NDVI decline alone does not prove soil degradation or lower yields."}
+chart_ndvi_max: {ru: "Максимум NDVI за сезон по годам", kk: "Жылдар бойынша маусымдық ең жоғары NDVI", en: "Seasonal NDVI maximum by year"}
+chart_ndvi_curves: {ru: "Сезонный ход NDVI: последние сезоны и медиана", kk: "NDVI-дің маусымдық барысы: соңғы маусымдар мен медиана", en: "Seasonal NDVI course: recent seasons and median"}
+trend_line: {ru: "линейный тренд", kk: "сызықтық тренд", en: "linear trend"}
+median_band: {ru: "медиана и P10–P90 всех лет", kk: "барлық жылдардың медианасы және P10–P90", en: "median and P10–P90 of all years"}
+day_of_year: {ru: "День года", kk: "Жыл күні", en: "Day of year"}
+
+# --- вода
+chart_precip: {ru: "Осадки за май–август, мм (NASA POWER)", kk: "Мамыр–тамыз жауын-шашыны, мм (NASA POWER)", en: "May–August precipitation, mm (NASA POWER)"}
+chart_smap: {ru: "Влажность почвы в апреле–мае к медиане (SMAP)", kk: "Сәуір–мамырдағы топырақ ылғалдылығы медианаға қатысты (SMAP)", en: "April–May soil moisture relative to median (SMAP)"}
+dry_year: {ru: "засушливый год", kk: "құрғақшылық жыл", en: "dry year"}
+normal_year: {ru: "обычный год", kk: "қалыпты жыл", en: "normal year"}
+p20_line: {ru: "порог засухи (P20)", kk: "құрғақшылық шегі (P20)", en: "drought threshold (P20)"}
+water_text: {ru: "Засушливыми по определению модели (осадки май–август ниже 20-го перцентиля нормы 1991–2020 или аномалия ≤ −1σ) были {n} из {total} лет ({from_year}–{to_year}): {years}. Обычный запас продуктивной влаги к посеву — {stock} мм ({basis}).", kk: "Модель анықтамасы бойынша құрғақшылық жылдар (мамыр–тамыз жауын-шашыны 1991–2020 нормасының 20-перцентилінен төмен немесе аномалия ≤ −1σ): {total} жылдың {n}-і ({from_year}–{to_year}): {years}. Егіс алдындағы қалыпты өнімді ылғал қоры — {stock} мм ({basis}).", en: "By the model definition (May–August rainfall below the 20th percentile of the 1991–2020 normal or anomaly ≤ −1σ), {n} of {total} years ({from_year}–{to_year}) were dry: {years}. Normal plant-available moisture at sowing is {stock} mm ({basis})."}
+basis_smap: {ru: "по SMAP", kk: "SMAP бойынша", en: "from SMAP"}
+basis_power: {ru: "по осадкам NASA POWER", kk: "NASA POWER жауын-шашыны бойынша", en: "from NASA POWER rainfall"}
+mm: {ru: "мм", kk: "мм", en: "mm"}
+
+# --- риски
+col_indicator: {ru: "Показатель", kk: "Көрсеткіш", en: "Indicator"}
+col_value: {ru: "Значение", kk: "Мәні", en: "Value"}
+col_reference: {ru: "Норма / медиана", kk: "Норма / медиана", en: "Normal / median"}
+col_level: {ru: "Уровень", kk: "Деңгей", en: "Level"}
+col_kind: {ru: "Тип", kk: "Түрі", en: "Type"}
+col_source: {ru: "Источник", kk: "Дереккөз", en: "Source"}
+level_low: {ru: "низкий", kk: "төмен", en: "low"}
+level_moderate: {ru: "умеренный", kk: "орташа", en: "moderate"}
+level_high: {ru: "высокий", kk: "жоғары", en: "high"}
+level_unknown: {ru: "нет данных", kk: "дерек жоқ", en: "no data"}
+risk_precip_season: {ru: "Осадки май–август {period}", kk: "Мамыр–тамыз жауын-шашыны {period}", en: "May–August rainfall {period}"}
+risk_temperature_season: {ru: "Средняя температура май–август {period}", kk: "Мамыр–тамыздағы орташа температура {period}", en: "Mean May–August temperature {period}"}
+risk_heat_days: {ru: "Дни с максимумом ≥ {threshold} °C, {period}", kk: "Ең жоғары ≥ {threshold} °C күндер, {period}", en: "Days with maximum ≥ {threshold} °C, {period}"}
+risk_vegetation: {ru: "Максимум NDVI сезона ({period})", kk: "Маусымдық ең жоғары NDVI ({period})", en: "Seasonal NDVI maximum ({period})"}
+risk_soil_moisture: {ru: "Влажность почвы перед посевом ({period})", kk: "Егіс алдындағы топырақ ылғалдылығы ({period})", en: "Pre-sowing soil moisture ({period})"}
+risk_drought_frequency: {ru: "Доля засушливых лет ({period})", kk: "Құрғақшылық жылдардың үлесі ({period})", en: "Share of dry years ({period})"}
+risk_model_drought_exposure: {ru: "Модельное снижение урожайности пшеницы в засуху {period}", kk: "{period} құрғақшылығында бидай өнімділігінің модельдік төмендеуі", en: "Modelled wheat yield loss in the {period} drought"}
+
+# --- сравнение
+col_scenario: {ru: "Сценарий", kk: "Сценарий", en: "Scenario"}
+col_soil: {ru: "Почва", kk: "Топырақ", en: "Soil"}
+col_water: {ru: "Вода", kk: "Су", en: "Water"}
+col_income: {ru: "Доход", kk: "Табыс", en: "Income"}
+col_risk: {ru: "Риск", kk: "Тәуекел", en: "Risk"}
+col_weighted: {ru: "Балл", kk: "Ұпай", en: "Score"}
+col_margin: {ru: "Валовая маржа за {n}, тг/га", kk: "{n} жалпы маржасы, тг/га", en: "Gross margin over {n}, KZT/ha"}
+col_confidence: {ru: "Уверенность", kk: "Сенімділік", en: "Confidence"}
+conf_high: {ru: "высокая", kk: "жоғары", en: "high"}
+conf_medium: {ru: "средняя", kk: "орташа", en: "medium"}
+conf_low: {ru: "низкая", kk: "төмен", en: "low"}
+weights_text: {ru: "Приоритет: {priority}. Веса оценок: почва {soil} %, вода {water} %, доход {income} %, риск {risk} %.", kk: "Басымдық: {priority}. Бағалардың салмағы: топырақ {soil} %, су {water} %, табыс {income} %, тәуекел {risk} %.", en: "Priority: {priority}. Score weights: soil {soil} %, water {water} %, income {income} %, risk {risk} %."}
+custom_priority: {ru: "свои веса", kk: "өз салмақтары", en: "custom weights"}
+scores_note: {ru: "Оценки 1–5 нормируются от худшего к лучшему значению среди сравниваемых и опорных сценариев. Уверенность — доля использованных параметров, подтверждённых источником или являющихся определениями (≥ 60 % — высокая, ≥ 30 % — средняя).", kk: "1–5 бағалары салыстырылатын және тірек сценарийлер арасындағы ең нашар мәннен ең жақсы мәнге дейін қалыптастырылады. Сенімділік — дереккөзбен расталған немесе анықтама болып табылатын пайдаланылған параметрлердің үлесі (≥ 60 % — жоғары, ≥ 30 % — орташа).", en: "Scores 1–5 are scaled from the worst to the best value among the compared and reference scenarios. Confidence is the share of parameters used that are confirmed by a source or are definitions (≥ 60 % high, ≥ 30 % medium)."}
+col_n: {ru: "Азот, кг N/га", kk: "Азот, кг N/га", en: "Nitrogen, kg N/ha"}
+col_humus: {ru: "Гумус, т/га", kk: "Гумус, т/га", en: "Humus, t/ha"}
+col_soil_index: {ru: "Индекс почвы", kk: "Топырақ индексі", en: "Soil index"}
+col_deficit: {ru: "Дефицит влаги, мм/год", kk: "Ылғал тапшылығы, мм/жыл", en: "Water deficit, mm/yr"}
+col_revenue: {ru: "Выручка", kk: "Түсім", en: "Revenue"}
+col_cost: {ru: "Затраты", kk: "Шығындар", en: "Costs"}
+col_gross: {ru: "Маржа", kk: "Маржа", en: "Margin"}
+col_price_minus: {ru: "Маржа при цене −20 %", kk: "Баға −20 % кезіндегі маржа", en: "Margin at price −20 %"}
+col_price_plus: {ru: "Маржа при цене +20 %", kk: "Баға +20 % кезіндегі маржа", en: "Margin at price +20 %"}
+col_drought_loss: {ru: "Потеря выручки в засуху, %", kk: "Құрғақшылықта түсім шығыны, %", en: "Revenue loss in drought, %"}
+econ_note: {ru: "Тенге на гектар за весь план. Валовая маржа = выручка − прямые затраты. Цены — Минсельхоз РК, 27.07.2026; затраты — предварительные допущения.", kk: "Бүкіл жоспарға гектарына теңге. Жалпы маржа = түсім − тікелей шығындар. Бағалар — ҚР АШМ, 27.07.2026; шығындар — алдын ала болжамдар.", en: "KZT per hectare for the whole plan. Gross margin = revenue − direct costs. Prices: Ministry of Agriculture of Kazakhstan, 27.07.2026; costs are preliminary assumptions."}
+
+# --- многолетняя симуляция
+chart_income: {ru: "Валовая маржа по годам, тыс. тг/га", kk: "Жылдар бойынша жалпы маржа, мың тг/га", en: "Gross margin by year, thousand KZT/ha"}
+chart_soil: {ru: "Индекс почвы (100 = сегодня)", kk: "Топырақ индексі (100 = бүгін)", en: "Soil index (100 = today)"}
+chart_year: {ru: "Год", kk: "Жыл", en: "Year"}
+forecast_note: {ru: "Это модельная симуляция при погоде обычного года поля (медиана за 25 лет) и постоянных ценах, а не прогноз урожая.", kk: "Бұл — болжам емес, егістіктің қалыпты жылы (25 жылдың медианасы) мен тұрақты бағалар кезіндегі модельдік есеп.", en: "This is a model simulation under the field's normal-year weather (25-year median) and constant prices, not a yield forecast."}
+
+# --- стресс-тест
+stress_conditions: {ru: "Исторические условия {year} года на поле: осадки май–август {precip} мм (норма {normal} мм, аномалия {z}σ); запас влаги к посеву {stock} мм; максимум NDVI {ndvi}.", kk: "Егістікте {year} жылғы тарихи жағдай: мамыр–тамыз жауын-шашыны {precip} мм (норма {normal} мм, аномалия {z}σ); егіс алдындағы ылғал қоры {stock} мм; ең жоғары NDVI {ndvi}.", en: "Historical conditions on the field in {year}: May–August rainfall {precip} mm (normal {normal} mm, anomaly {z}σ); moisture at sowing {stock} mm; NDVI maximum {ndvi}."}
+stress_method: {ru: "В каждом сценарии год, в который засуха обошлась бы дороже всего, заменён условиями засушливого года. Урожайность культур снижается по коэффициенту Ky (FAO-33).", kk: "Әр сценарийде құрғақшылық ең қымбатқа түсетін жыл құрғақшылық жылдың жағдайымен ауыстырылды. Дақылдардың өнімділігі Ky коэффициенті бойынша төмендейді (FAO-33).", en: "In each scenario the year in which a drought would cost the most is replaced by the dry-year conditions. Crop yields are reduced by the Ky coefficient (FAO-33)."}
+col_normal: {ru: "Без засухи", kk: "Құрғақшылықсыз", en: "No drought"}
+col_dry: {ru: "С засухой (год)", kk: "Құрғақшылықпен (жыл)", en: "With drought (year)"}
+col_loss: {ru: "Потеря", kk: "Шығын", en: "Loss"}
+chart_stress: {ru: "Маржа за план, тыс. тг/га", kk: "Жоспар бойынша маржа, мың тг/га", en: "Gross margin over the plan, thousand KZT/ha"}
+
+# --- рекомендованный
+recommended_intro: {ru: "Сценарий «{name}» получил наибольший взвешенный балл ({score} из 5) при выбранных весах. Это не гарантия результата: остальные сценарии остаются вариантами для решения фермера.", kk: "«{name}» сценарийі таңдалған салмақтар кезінде ең жоғары өлшенген ұпай алды (5-тен {score}). Бұл нәтиже кепілдігі емес: қалған сценарийлер фермердің шешімі үшін нұсқа болып қалады.", en: "Scenario «{name}» has the highest weighted score ({score} out of 5) under the selected weights. This does not guarantee the outcome: the other scenarios remain options for the farmer's decision."}
+col_year: {ru: "Год", kk: "Жыл", en: "Year"}
+col_crop: {ru: "Культура", kk: "Дақыл", en: "Crop"}
+col_yield: {ru: "Урожайность, т/га", kk: "Өнімділік, т/га", en: "Yield, t/ha"}
+col_margin_year: {ru: "Маржа, тг/га", kk: "Маржа, тг/га", en: "Margin, KZT/ha"}
+col_margin_dry: {ru: "Маржа в засуху, тг/га", kk: "Құрғақшылықтағы маржа, тг/га", en: "Margin in drought, KZT/ha"}
+why: {ru: "Почему", kk: "Неліктен", en: "Why"}
+drivers: {ru: "Что повлияло", kk: "Не әсер етті", en: "What drove the result"}
+driver_conditions: {ru: "Условия поля: в обычный год {water} мм доступной влаги (осадки + запас) против {ref} мм в среднем по области; засушлив каждый {nth}-й год.", kk: "Егістік жағдайы: қалыпты жылы {water} мм қолжетімді ылғал (жауын-шашын + қор), облыс бойынша орташа {ref} мм; әр {nth}-жыл құрғақ.", en: "Field conditions: {water} mm of available water (rainfall + stored moisture) in a normal year versus {ref} mm for the region on average; every {nth}th year is dry."}
+driver_datasets: {ru: "Данные: NASA POWER (осадки, температура), SMAP (влага перед посевом), MODIS (NDVI), SoilGrids (влагоёмкость почвы).", kk: "Деректер: NASA POWER (жауын-шашын, температура), SMAP (егіс алдындағы ылғал), MODIS (NDVI), SoilGrids (топырақтың ылғал сыйымдылығы).", en: "Data: NASA POWER (rainfall, temperature), SMAP (moisture before sowing), MODIS (NDVI), SoilGrids (soil water-holding capacity)."}
+driver_confidence: {ru: "Уверенность: {level} — {supported} из {total} использованных параметров подтверждены источником или являются определениями.", kk: "Сенімділік: {level} — пайдаланылған {total} параметрдің {supported}-і дереккөзбен расталған немесе анықтама болып табылады.", en: "Confidence: {level} — {supported} of {total} parameters used are confirmed by a source or are definitions."}
+no_field_yield: {ru: "Фактических урожаев по этому полю в модели нет: результаты не откалиброваны по урожайности хозяйства.", kk: "Модельде осы егістіктің нақты өнімі жоқ: нәтижелер шаруашылық өнімділігі бойынша калибрленбеген.", en: "No actual yields for this field are available to the model: results are not calibrated against farm yields."}
+
+# --- допущения
+assumptions_intro: {ru: "Параметры, использованные в расчёте рекомендованного сценария. Статус verified — значение сверено с применимым источником; assumption — допущение. Класс: подтверждено источником / проверить агрономом / предварительное / определение.", kk: "Ұсынылған сценарийді есептеуде пайдаланылған параметрлер. verified мәртебесі — мән қолданылатын дереккөзбен тексерілген; assumption — болжам. Класы: дереккөзбен расталған / агроном тексеруі керек / алдын ала / анықтама.", en: "Parameters used for the recommended scenario. Status verified: value checked against an applicable source; assumption: an assumption. Class: confirmed by a source / agronomist review / preliminary / definition."}
+col_param: {ru: "Параметр", kk: "Параметр", en: "Parameter"}
+col_status: {ru: "Статус", kk: "Мәртебесі", en: "Status"}
+col_evidence: {ru: "Класс", kk: "Класы", en: "Class"}
+ev_literature: {ru: "источник", kk: "дереккөз", en: "source"}
+ev_agronomist_review: {ru: "агроном", kk: "агроном", en: "agronomist"}
+ev_preliminary: {ru: "предварит.", kk: "алдын ала", en: "preliminary"}
+ev_definition: {ru: "определение", kk: "анықтама", en: "definition"}
+
+# --- ограничения
+limitations:
+  ru:
+    - "Урожайность и затраты альтернативных культур — допущения; при урожайности на 20 % и затратах на 30 % хуже принятых монокультура пшеницы может оказаться доходнее."
+    - "Эффекты предшественников взяты из опытов в Канаде и зависят от азотного питания; удобрения в модели не учитываются."
+    - "Горизонт 3–5 лет обрезает пользу пара и бобовой культуры в последнем году плана."
+    - "Осадки — реанализ с ячейкой ~50 км, влажность почвы SMAP — ячейка 9 км: локальные ливни и неоднородность поля не видны."
+    - "Цены и затраты постоянны на весь план; рыночные колебания показаны только сценариями ±20 %."
+    - "NDVI — зелёная масса, а не урожай; модель не откалибрована по фактическим урожаям поля."
+  kk:
+    - "Балама дақылдардың өнімділігі мен шығындары — болжамдар; өнімділік 20 %-ға және шығындар 30 %-ға нашар болса, бидай монокультурасы табыстырақ болуы мүмкін."
+    - "Алғы дақыл әсерлері Канададағы тәжірибелерден алынған және азотпен қоректенуге тәуелді; модельде тыңайтқыштар ескерілмейді."
+    - "3–5 жылдық көкжиек жоспардың соңғы жылындағы пар мен бұршақ дақылының пайдасын қысқартады."
+    - "Жауын-шашын — ~50 км ұяшықты реанализ, SMAP топырақ ылғалдылығы — 9 км ұяшық: жергілікті нөсер мен егістіктің біркелкі еместігі көрінбейді."
+    - "Бағалар мен шығындар бүкіл жоспарға тұрақты; нарық ауытқулары тек ±20 % сценарийлерімен көрсетілген."
+    - "NDVI — өнім емес, жасыл масса; модель егістіктің нақты өнімі бойынша калибрленбеген."
+  en:
+    - "Yields and costs of alternative crops are assumptions; if yields are 20 % lower and costs 30 % higher than assumed, continuous wheat may earn more."
+    - "Predecessor effects come from Canadian trials and depend on nitrogen supply; fertiliser is not modelled."
+    - "The 3–5 year horizon truncates the benefit of fallow or a legume in the last plan year."
+    - "Rainfall is a ~50 km reanalysis cell and SMAP soil moisture a 9 km cell: local showers and within-field variability are not visible."
+    - "Prices and costs are constant over the plan; market swings are shown only as ±20 % scenarios."
+    - "NDVI is green biomass, not yield; the model is not calibrated against actual field yields."
+
+# --- подписи
+sign_farm: {ru: "Хозяйство", kk: "Шаруашылық", en: "Farm"}
+sign_farmer: {ru: "Фермер (подпись)", kk: "Фермер (қолы)", en: "Farmer (signature)"}
+sign_agronomist: {ru: "Агроном (подпись)", kk: "Агроном (қолы)", en: "Agronomist (signature)"}
+sign_date: {ru: "Дата", kk: "Күні", en: "Date"}
+generated_by: {ru: "Сформировано автоматически Агро-Севооборот {date}", kk: "Агро-Ауыспалы егіс автоматты түрде жасады {date}", en: "Generated automatically by Agro-Sevooborot on {date}"}
+# ---------------------------------------------------------------- дни без покрова в сценариях (задача 5)
+col_bare_days: {ru: "Дней без покрова в год", kk: "Жылына жамылғысыз күндер", en: "Bare days per year"}
+col_exposure: {ru: "Индекс опасности эрозии (0–1)", kk: "Эрозия қауіпі индексі (0–1)", en: "Erosion exposure index (0–1)"}
+bare_note: {ru: "Дни без покрова — дни бесснежного сезона поля ({start}–{end}, {days} дн., медиана за {n} лет) вне периода покрова культуры: с конца окна сева до середины окна уборки (параметр конструкции модели, assumption). После уборки стерня считается «без зелёного покрова», поэтому это верхняя оценка. Индекс опасности эрозии — доля дней сезона, когда одновременно нет покрова, ветер не слабее {wind} м/с на 2 м (POWER WS2M_MAX) и сухой верхний слой (SMAP, иначе GWETTOP); пороги те же, что у «Часов голой почвы» (assumption). В балл и рейтинг не входит. Окна сева и уборки: {windows}.", kk: "Жамылғысыз күндер — алқаптың қарсыз маусымындағы ({start}–{end}, {days} күн, {n} жылдың медианасы) дақыл жамылғысы кезеңінен тыс күндер: себу терезесінің соңынан жинау терезесінің ортасына дейін (модель құрылымының параметрі, assumption). Жинаудан кейін аңыз «жасыл жамылғысыз» саналады, сондықтан бұл жоғарғы баға. Эрозия қауіпі индексі — маусым күндерінің үлесі: бір мезгілде жамылғы жоқ, 2 м биіктікте жел {wind} м/с-тан әлсіз емес (POWER WS2M_MAX) және беткі қабат құрғақ (SMAP, болмаса GWETTOP); шектер «Жалаңаш топырақ сағаттарындағыдай» (assumption). Балл мен рейтингке кірмейді. Себу және жинау терезелері: {windows}. (ана тілінде тексеру қажет)", en: "Bare days are days of the field's snow-free season ({start}–{end}, {days} days, median of {n} years) outside the crop's canopy period: from the end of the sowing window to the middle of the harvest window (model design parameter, assumption). Stubble after harvest counts as no green cover, so this is an upper estimate. The erosion exposure index is the share of season days with no cover, wind of at least {wind} m/s at 2 m (POWER WS2M_MAX) and dry topsoil (SMAP, else GWETTOP) on the same day; thresholds as in the Bare Soil Clock (assumption). Not included in the score or ranking. Sowing and harvest windows: {windows}."}
+bare_missing: {ru: "Дни без покрова не посчитаны: нет климатологии ветра, сухости и снега поля ({reason}).", kk: "Жамылғысыз күндер есептелмеді: алқаптың жел, құрғақшылық және қар климатологиясы жоқ ({reason}). (ана тілінде тексеру қажет)", en: "Bare days not computed: no wind, dryness and snow climatology for the field ({reason})."}
+bare_not_saved: {ru: "Дни без покрова: в этом расчёте показателя нет (—).", kk: "Жамылғысыз күндер: бұл есепте көрсеткіш жоқ (—). (ана тілінде тексеру қажет)", en: "Bare days: not available in this calculation (—)."}
+col_bare_days_y: {ru: "Дней без покрова", kk: "Жамылғысыз күндер", en: "Bare days"}
+col_risky_days_y: {ru: "Опасных дней (ожидание)", kk: "Қауіпті күндер (күтілетін)", en: "Risky days (expected)"}

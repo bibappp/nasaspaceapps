@@ -1,0 +1,105 @@
+{
+ "xllcorner": "4791897.43",
+ "yllcorner": "5782351.19",
+ "cellsize": 231.656358264,
+ "nrows": 3,
+ "ncols": 3,
+ "latitude": 52.005,
+ "longitude": 70.01,
+ "header": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset (shape as returned by ORNL TESViS)",
+ "units": "",
+ "scale": "0.0001",
+ "band": "250m_16_days_NDVI",
+ "subset": [
+  {
+   "modis_date": "A2024081",
+   "calendar_date": "2024-03-21",
+   "band": "250m_16_days_NDVI",
+   "tile": "h22v03",
+   "proc_date": "2024330000000",
+   "data": [
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000
+   ]
+  },
+  {
+   "modis_date": "A2024097",
+   "calendar_date": "2024-04-06",
+   "band": "250m_16_days_NDVI",
+   "tile": "h22v03",
+   "proc_date": "2024330000000",
+   "data": [
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500
+   ]
+  },
+  {
+   "modis_date": "A2024113",
+   "calendar_date": "2024-04-22",
+   "band": "250m_16_days_NDVI",
+   "tile": "h22v03",
+   "proc_date": "2024330000000",
+   "data": [
+    1200,
+    1300,
+    1400,
+    1500,
+    1600,
+    1700,
+    1800,
+    4000,
+    4500
+   ]
+  },
+  {
+   "modis_date": "A2024289",
+   "calendar_date": "2024-10-15",
+   "band": "250m_16_days_NDVI",
+   "tile": "h22v03",
+   "proc_date": "2024330000000",
+   "data": [
+    2000,
+    2000,
+    2000,
+    2000,
+    2000,
+    2000,
+    2000,
+    2000,
+    2000
+   ]
+  },
+  {
+   "modis_date": "A2024305",
+   "calendar_date": "2024-10-31",
+   "band": "250m_16_days_NDVI",
+   "tile": "h22v03",
+   "proc_date": "2024330000000",
+   "data": [
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000,
+    -3000
+   ]
+  }
+ ]
+}

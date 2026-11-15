@@ -1,0 +1,73 @@
+{
+ "id": "demo-kostanay",
+ "name": {
+  "ru": "Демо-поле, Костанайский район",
+  "kk": "Демо-егістік, Қостанай ауданы",
+  "en": "Demo field, Kostanay district"
+ },
+ "region": "kostanay",
+ "geometry": {
+  "type": "Polygon",
+  "coordinates": [
+   [
+    [
+     63.9555,
+     53.0845
+    ],
+    [
+     63.979,
+     53.0845
+    ],
+    [
+     63.979,
+     53.07
+    ],
+    [
+     63.9486,
+     53.07
+    ],
+    [
+     63.9555,
+     53.0845
+    ]
+   ]
+  ]
+ },
+ "history": [
+  {
+   "year": 2022,
+   "crop": "wheat"
+  },
+  {
+   "year": 2023,
+   "crop": "wheat"
+  },
+  {
+   "year": 2024,
+   "crop": "pea"
+  },
+  {
+   "year": 2025,
+   "crop": "wheat"
+  },
+  {
+   "year": 2026,
+   "crop": "wheat"
+  }
+ ],
+ "history_is_scenario": true,
+ "history_note": {
+  "ru": "История культур — учебный сценарий (пшеница с одним годом гороха). Фактические посевы на этом поле не проверялись.",
+  "kk": "Дақылдар тарихы — оқу сценарийі (бір жыл асбұршақпен бидай). Бұл егістіктегі нақты егістер тексерілмеген.",
+  "en": "Crop history is a training scenario (wheat with one year of peas). Actual crops on this field have not been verified."
+ },
+ "priority": "balanced",
+ "horizon_years": 4,
+ "contour_source": "Esri World Imagery, ручная оцифровка 13.11.2026",
+ "area_ha": 290.3,
+ "centroid": {
+  "lat": 53.07694,
+  "lon": 63.96545
+ },
+ "built_at": "2026-11-14T21:05:17+00:00"
+}

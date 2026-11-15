@@ -1,0 +1,86 @@
+# Поле evidence — класс обоснованности (аудит модели, docs/MODEL_AUDIT.md):
+#   literature — значение или диапазон есть в научном/официальном источнике (сверено с текстом);
+#   agronomist_review — косвенная опора (другой регион, аналог, один год, расчёт), нужна проверка агрономом;
+#   preliminary — предварительное допущение без источника или параметр конструкции модели;
+#   definition — определение, тривиальное значение или величина, рассчитанная из данных.
+# status: verified ставится только при literature/definition, если значение применимо к Северному Казахстану.
+# Эффект предшественника: на сколько процентов меняется урожайность культуры (crop)
+# в зависимости от того, что росло на поле годом раньше (predecessor).
+#
+# База сравнения (0 %) — посев по зерновому предшественнику, то есть «пшеница по пшенице»:
+# именно так получена большая часть областной статистики урожайности (до 87 % пшеницы в посевах).
+#
+# В полях predecessor и crop можно указать культуру (wheat, pea, ...) или группу:
+#   group:cereal | group:legume | group:oilseed | group:fallow | any
+# Выбирается самое конкретное подходящее правило: культура→культура, затем культура→группа,
+# группа→культура, группа→группа, any. Если правил нет — эффект 0 %.
+# same: true — правило действует, только когда культура идёт по самой себе.
+#
+# Эффект пара на урожай здесь не задаётся: он считается явно через запас влаги
+# (model.yaml -> water.fallow_stock_gain_pct), чтобы не учесть его дважды.
+
+effects:
+  - id: wheat_after_pea
+    predecessor: pea
+    crop: group:cereal
+    yield_effect_pct:
+      {value: 26, unit: "%", source: saskpulse_sequence, status: assumption, evidence: literature,
+       note: "Swift Current (Саскачеван) и Brooks (Альберта), три цикла 4-летних севооборотов: пшеница после гороха +26 % к пшенице по пшенице — сверено с текстом. Разброс источников: данные страхования урожая Альберты +15 % (HRS) / +17 % (CPS) при обычном удобрении (Smith et al., 2023); при полной дозе азота эффект бобовых может исчезать (Zentner et al., 1997). Перенос на Казахстан — нужна проверка"}
+
+  - id: wheat_after_lentil
+    predecessor: lentil
+    crop: group:cereal
+    yield_effect_pct:
+      {value: 18, unit: "%", source: saskpulse_sequence, status: assumption, evidence: literature,
+       note: "Swift Current и Brooks: пшеница после чечевицы +18 % к пшенице по пшенице — сверено с текстом. Контрпример: 18-летний опыт Zentner et al. (1997), все варианты с рекомендованной дозой N — 23,4 против 23,5 бушеля/акр (без прибавки). Эффект в основном азотный: значим при низких дозах удобрений, как в большинстве хозяйств Казахстана"}
+
+  - id: wheat_after_chickpea
+    predecessor: chickpea
+    crop: group:cereal
+    yield_effect_pct:
+      {value: 10, unit: "%", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Данных по нуту не найдено. Принято меньше, чем после чечевицы: нут фиксирует меньше азота. TODO: проверить у агронома"}
+
+  - id: cereal_after_oilseed
+    predecessor: group:oilseed
+    crop: group:cereal
+    yield_effect_pct:
+      {value: 10, unit: "%", source: poga_pea, status: assumption, evidence: agronomist_review,
+       note: "Данные страхования урожая Альберты (Smith et al., 2023): пшеница HRS после рапса 1,16, CPS 1,16 к пшенице по пшенице; принято +10 % (ниже). Для льна и подсолнечника данных нет — групповое правило"}
+
+  - id: cereal_after_sunflower
+    predecessor: sunflower
+    crop: group:cereal
+    yield_effect_pct:
+      {value: -10, unit: "%", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Подсолнечник глубоко иссушает почву, следующей культуре достаётся меньше влаги. TODO: проверить у агронома"}
+
+  - id: legume_after_same_legume
+    predecessor: group:legume
+    crop: group:legume
+    same: true
+    yield_effect_pct:
+      {value: -15, unit: "%", source: poga_pea, status: assumption, evidence: literature,
+       note: "Данные Альберты (Smith et al., 2023): горох по гороху 0,85 к гороху после пшеницы — сверено. Для чечевицы и нута — перенос"}
+
+  - id: legume_after_other_legume
+    predecessor: group:legume
+    crop: group:legume
+    yield_effect_pct:
+      {value: -10, unit: "%", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Общие корневые гнили у гороха и чечевицы. TODO: проверить у агронома"}
+
+  - id: oilseed_after_same_oilseed
+    predecessor: group:oilseed
+    crop: group:oilseed
+    same: true
+    yield_effect_pct:
+      {value: -15, unit: "%", source: expert_guess, status: assumption, evidence: agronomist_review,
+       note: "Данные Альберты (Smith et al., 2023): рапс по рапсу 0,93 (−7 %) — принятые −15 % сильнее. Для льна (льноутомление) и подсолнечника числовых данных не найдено. TODO: проверить у агронома"}
+
+  - id: oilseed_after_other_oilseed
+    predecessor: group:oilseed
+    crop: group:oilseed
+    yield_effect_pct:
+      {value: -10, unit: "%", source: expert_guess, status: assumption, evidence: preliminary,
+       note: "Общие болезни рапса и подсолнечника (белая гниль). TODO: проверить у агронома"}

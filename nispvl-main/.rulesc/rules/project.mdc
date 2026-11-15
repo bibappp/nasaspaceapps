@@ -1,0 +1,117 @@
+---
+description: Agro-Sevooborot NASA Space Apps — frontend scope, stack, hard rules, UI conventions
+alwaysApply: true
+---
+
+# PROJECT CONTEXT — read before doing anything
+
+What this is: «Агро-Севооборот» (Agro-Rotation), our NASA Space Apps 2026 project for the challenge
+"Field Shift: Adapting Farms with NASA Data". It is a decision-support web app for farmers and agronomists in
+Northern Kazakhstan (Akmola, Kostanay, North Kazakhstan oblasts), where fields are dominated by spring wheat
+grown year after year, with long periods of bare soil and a history of severe wind erosion.
+
+What it does: a farmer creates an account, draws a field on the map, and sees long-term NASA data for that
+field (rainfall and temperature from NASA POWER, vegetation NDVI from MODIS, soil moisture from SMAP, soil
+properties from SoilGrids). The app rates the season's risks and compares 2–4 crop rotations on soil, water,
+income and risk over 3–5 years, with economics, a drought stress test and an explanation for every score.
+It exports PDF and Excel reports in Russian, Kazakh and English. There is an offline demo at /demo with two
+real fields (Shortandy, Akmola; Kostanay).
+
+What it is used for: helping farmers explore rotations that protect soil and cope with drought. It is a
+support tool, not an oracle: every number shows its source, data type (observation / reanalysis / model),
+resolution and period, and anything unverified is marked "requires checking". The farmer decides.
+
+What we are adding this weekend: the "Bare Soil Clock", which shows month by month when a field is bare AND
+windy AND dry (erosion exposure) and when a cover crop could fit; bare-soil numbers in the rotation planner;
+live status of the GPM and Landsat data sources; and a Telegram bot entry point. My teammate builds the
+backend in Claude Code at the same time. I build ONLY the frontend.
+
+Stack: React 18 + TypeScript strict + Vite + Tailwind + react-leaflet + recharts + i18next (ru/kk/en).
+Key files: frontend/src/pages/app/FieldWorkspace.tsx (field tabs), frontend/src/components/workspace/*
+(one component per tab), frontend/src/components/ui/ui.tsx (Loading, ErrorBox, EmptyState, Notice,
+KindBadge, LevelBadge, SectionTitle, Tabs), frontend/src/components/charts/ChartFrame.tsx (chart wrapper
+with caption and data table), frontend/src/components/workspace/SourceList.tsx, frontend/src/lib/async.ts
+(useAsync), frontend/src/lib/colors.ts (RAMPS), frontend/src/api/client.ts and api/types.ts,
+frontend/src/locales/{ru,kk,en}.json.
+
+## Hard rules
+
+1. Edit only frontend/. Never edit backend/, scripts/ or docs/contracts/. If you need a new API field,
+   write it in docs/contracts/REQUESTS.md instead.
+2. The API contract is docs/contracts/bare_soil.example.json. Do not change its shape.
+3. Reuse existing components and patterns; copy how Monitoring.tsx and RiskTab.tsx are built
+   (useAsync, background-job polling, ChartFrame with a table under each chart, SourceList).
+4. Every chart shows source, data type, resolution and period, and has a data table. Colour is never the
+   only carrier of meaning. Unverified values show a "requires checking" badge.
+5. Nothing may be demo-only: new fields drawn by users must get the same features with live data.
+6. Every UI string goes into ru.json, kk.json and en.json with identical keys and placeholders. List any
+   Kazakh strings you wrote at the end of your answer so a native speaker can review them.
+7. Must work at 390 px width with no horizontal scroll, and with the keyboard.
+8. Before finishing: run `make build` (TypeScript strict) and fix all errors. Tell me which files you changed.
+
+---
+
+## Frontend conventions (discovered)
+
+### Routing (`frontend/src/App.tsx`)
+
+- `BrowserRouter` in `main.tsx`; `ConfigProvider` + `AuthProvider` wrap all routes.
+- **Private app** routes use `<Private>` → `RequireAuth` + `AppShell`: `/app`, `/app/fields`, `/app/fields/new`, `/app/fields/:id`, `/app/fields/:id/edit`, `/app/analyses`, `/app/analyses/:id`, `/app/account`.
+- **Public** marketing/info: `/`, `/welcome`, auth (`/login`, `/register`, `/demo`), and `Shell`-wrapped `/nasa`, `/methodology`, `/retro`, `/about`, `/quick`.
+- Field workspace URL: `/app/fields/:id` with optional query `?tab=<id>`. `FieldWorkspaceKeyed` remounts workspace when `id` changes (`key={id}`).
+
+### Adding a field workspace tab (`FieldWorkspace.tsx`)
+
+1. Add id to const `TABS` (union type derives from it).
+2. Add Lucide icon to `ICONS` record.
+3. Import workspace component; add `case` in `panel()` switch.
+4. Add labels under `tabs.<id>` in `ru.json`, `kk.json`, `en.json` (same keys).
+5. Tabs lazy-mount: `visited` Set keeps panels mounted after first open; inactive panels use `hidden={k !== tab}` and `role="tabpanel"`.
+
+### API client (`frontend/src/api/client.ts`)
+
+- All JSON: `fetch('/api' + path, { credentials: 'same-origin' })` with `Content-Type: application/json` and `X-Requested-With: agro`.
+- Errors throw `ApiError(status, detail)`; use `errorText(e, t)` from `lib/async.ts` (maps `errors.*` i18n keys, 404, 503, network).
+- Field endpoints: `api.field`, `api.fieldOverview`, `api.fieldMonitoring(fieldId, start?, end?)`, `api.fieldRisk`, etc.
+- Background jobs: `api.job(id)` → `Job` with `status: running | done | failed`.
+- Downloads use blob + `Content-Disposition` filename.
+
+### Async state and job polling (`lib/async.ts`, `Monitoring.tsx`)
+
+- `useAsync(fn, deps)` → `{ data, error, loading, reload, setData }`; stale responses ignored via sequence ref.
+- **Monitoring pattern** (`useJobsPolling`): response may include `jobs[]` with `status === "pending"` and nested `job.id`. Poll `api.job` every 4s; if any job is no longer `running`, call `reload()`. Show `Notice` with `monitoring.pending` while pending.
+- **Wizard** uses similar polling on compare/analyze job lists.
+- Tab bodies: early return `ErrorBox` + `onRetry={reload}` on error; `Loading` until `data`; then render.
+
+### Charts and provenance
+
+- Wrap every chart in `ChartFrame`: `title`, optional `legend` (color swatches — solid, dashed, or band), `caption` (often starts with `KindBadge` + source title + period text), `table` with `columns` / `rows`, recharts inside `children`.
+- Shared chart styling: import `AXIS`, `GRID`, `C`, `TooltipBox` from `ChartFrame.tsx`. `C` = precip/normal/dry/ndvi/band/warm/cool/moisture hex colors.
+- Multi-series / rotation charts: `seriesColor(i)` and `SERIES` from `lib/colors.ts`; heat ramps: `RAMPS.ndvi`, `RAMPS.soil_moisture`, `RAMPS.precip`.
+- Page-level source table: `SectionTitle` + `SourceList` with `sources: SourceMeta[]` and optional `periods` map by source id. `SourceList` maps source id → kind via `KIND` (power→reanalysis, modis/smap/gpm→observation, soilgrids→model).
+- Unverified model params: `StatusBadge` (`components/common/StatusBadge.tsx`) — `verified` → `badge-green`, `assumption` → `badge-amber` + `app.needs_check` / `app.needs_check_title`.
+- Data kind chips: `KindBadge` in `ui.tsx` (`badge-blue` observation, `badge-amber` model/simulation/assumption, etc.). Risk levels: `LevelBadge` → `badge-red` | `badge-amber` | `badge-green` | `badge-neutral`.
+
+### Translations (`i18n.ts`, `locales/*.json`, `lib/i18n-text.ts`)
+
+- i18next + `react-i18next`; resources loaded from `ru`, `kk`, `en` JSON; default/fallback `ru`; lang in `localStorage` key `agro.lang`.
+- UI strings: nested JSON keys, `useTranslation()` → `t('section.key', { placeholders })`. Keep keys identical across all three locale files.
+- API multilingual fields (`I18nText`): `tx(text, lang)` — prefers current lang, falls back to `ru`.
+- `Lang` type and user profile lang align with `i18n.language`.
+
+### Layout / Tailwind design tokens (`index.css`, `tailwind.config.js`)
+
+- Surfaces: `bg-surface`, text `text-ink` / `text-ink-2` / `text-ink-muted` / `text-ink-subtle`, borders `border-line` / `border-line-strong`.
+- Cards: `card` (padded) or `panel` + `panel-head` + `panel-body` (charts, tables, forms).
+- Buttons: `btn-primary` (field green), `btn-secondary`, `btn-ghost`, `btn-danger`; compact `h-8` / `h-9` variants common.
+- Badges: `badge-green` | `badge-amber` | `badge-red` | `badge-blue` | `badge-neutral`.
+- Accent palette: `field-*` (primary brand green, e.g. active tab `border-field-700 text-field-800`), `status-good` | `status-warn` | `status-bad`.
+- Tables: `table` class; numeric cells `num` (right-aligned tabular). Wide tables: `panel overflow-x-auto` + `min-w-[…]` on table — not page-level horizontal scroll.
+- Typography utilities: `h1`, `h2`, `h3`, `eyebrow`, `label`, `input`.
+- Spacing rhythm: workspace tabs often `space-y-6`; responsive grids `sm:grid-cols-2`, `xl:grid-cols-2` etc.; `.grid > * { min-width: 0 }` for shrink.
+
+### Naming and imports
+
+- One tab ≈ one file in `components/workspace/` (PascalCase default export).
+- Icons: `lucide-react`. Numbers: `fmtNum` from `lib/format`; dates: `fmtDate` from `lib/async.ts`.
+- Types for API shapes live in `api/types.ts`; extend client in `api/client.ts` only when backend exposes new routes (document backend needs in `docs/contracts/REQUESTS.md`).

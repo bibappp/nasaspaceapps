@@ -1,0 +1,66 @@
+# Поле evidence — класс обоснованности (аудит модели, docs/MODEL_AUDIT.md):
+#   literature — значение или диапазон есть в научном/официальном источнике (сверено с текстом);
+#   agronomist_review — косвенная опора (другой регион, аналог, один год, расчёт), нужна проверка агрономом;
+#   preliminary — предварительное допущение без источника или параметр конструкции модели;
+#   definition — определение, тривиальное значение или величина, рассчитанная из данных.
+# status: verified ставится только при literature/definition, если значение применимо к Северному Казахстану.
+# Области. Областные опорные значения нужны, чтобы сравнить влагу конкретного поля
+# с «обычной» влагой области, для которой задана базовая урожайность.
+#
+# reference_points — точки в зоне пашни, по которым скрипт scripts/build_region_reference.py
+#   считает опорные осадки из NASA POWER (медиана за последние 25 полных лет).
+#   После правки точек перезапустите скрипт: он перезапишет блок reference_* с датой расчёта.
+# yield_index — отношение урожайности зерновых области к среднему по трём областям.
+# presowing_stock_norm_mm — обычный запас продуктивной влаги в метровом слое перед посевом.
+
+regions:
+  akmola:
+    name: {ru: "Акмолинская область", kk: "Ақмола облысы", en: "Akmola Region"}
+    reference_points:
+      - {name: "Атбасар", lat: 51.82, lon: 68.36}
+      - {name: "Есиль", lat: 51.96, lon: 66.40}
+      - {name: "Шортанды", lat: 51.70, lon: 71.00}
+      - {name: "Акколь", lat: 52.00, lon: 70.94}
+      - {name: "Егиндыколь", lat: 51.05, lon: 69.48}
+    yield_index:
+      {value: 0.91, unit: "—", source: harvest_2024, status: assumption, evidence: agronomist_review,
+       note: "14,1 ц/га при среднем 15,6 ц/га по трём областям в 2024 г. Соотношение одного (рекордного) года. TODO: заменить средним за 5 лет по stat.gov.kz"}
+    presowing_stock_norm_mm:
+      {value: 120, unit: "мм", source: kazhydromet_moisture, status: assumption, evidence: agronomist_review,
+       note: "Для СКО Казгидромет называет норму 115–166 мм. Для более сухой Акмолинской области принята нижняя часть диапазона. TODO: проверить по агрометбюллетеням Казгидромета"}
+    reference_season_precip_mm:
+      {value: 154.1, unit: "мм", source: nasa_power, status: verified, evidence: definition, note: "Среднее по 5 точкам (Атбасар, Есиль, Шортанды, Акколь, Егиндыколь) медианы осадков за май–август 2002–2026 гг.; значения по точкам: 169, 154, 148, 165, 134 мм. Рассчитано 2026-11-12"}
+
+  kostanay:
+    name: {ru: "Костанайская область", kk: "Қостанай облысы", en: "Kostanay Region"}
+    reference_points:
+      - {name: "Костанай", lat: 53.21, lon: 63.63}
+      - {name: "Рудный", lat: 52.97, lon: 63.12}
+      - {name: "Карасу", lat: 52.66, lon: 65.48}
+      - {name: "Сарыколь", lat: 53.32, lon: 65.55}
+      - {name: "Денисовка", lat: 52.45, lon: 61.75}
+    yield_index:
+      {value: 0.90, unit: "—", source: harvest_2024, status: assumption, evidence: agronomist_review,
+       note: "14,0 ц/га при среднем 15,6 ц/га по трём областям в 2024 г. TODO: заменить средним за 5 лет по stat.gov.kz"}
+    presowing_stock_norm_mm:
+      {value: 120, unit: "мм", source: kazhydromet_moisture, status: assumption, evidence: agronomist_review,
+       note: "Принято как для Акмолинской области. TODO: проверить по агрометбюллетеням Казгидромета"}
+    reference_season_precip_mm:
+      {value: 178.5, unit: "мм", source: nasa_power, status: verified, evidence: definition, note: "Среднее по 5 точкам (Костанай, Рудный, Карасу, Сарыколь, Денисовка) медианы осадков за май–август 2002–2026 гг.; значения по точкам: 177, 177, 172, 195, 172 мм. Рассчитано 2026-11-12"}
+
+  north_kazakhstan:
+    name: {ru: "Северо-Казахстанская область", kk: "Солтүстік Қазақстан облысы", en: "North Kazakhstan Region"}
+    reference_points:
+      - {name: "Петропавловск", lat: 54.87, lon: 69.15}
+      - {name: "Булаево", lat: 54.90, lon: 70.44}
+      - {name: "Сергеевка", lat: 53.88, lon: 67.41}
+      - {name: "Тайынша", lat: 53.85, lon: 69.76}
+      - {name: "Новоишимское", lat: 53.20, lon: 66.77}
+    yield_index:
+      {value: 1.19, unit: "—", source: harvest_2024, status: assumption, evidence: agronomist_review,
+       note: "18,6 ц/га при среднем 15,6 ц/га по трём областям в 2024 г. TODO: заменить средним за 5 лет по stat.gov.kz"}
+    presowing_stock_norm_mm:
+      {value: 140, unit: "мм", source: kazhydromet_moisture, status: assumption, evidence: agronomist_review,
+       note: "Середина нормы 115–166 мм, которую Казгидромет называет для СКО (диапазон проверен, выбор середины — допущение)"}
+    reference_season_precip_mm:
+      {value: 201.3, unit: "мм", source: nasa_power, status: verified, evidence: definition, note: "Среднее по 5 точкам (Петропавловск, Булаево, Сергеевка, Тайынша, Новоишимское) медианы осадков за май–август 2002–2026 гг.; значения по точкам: 217, 209, 204, 177, 200 мм. Рассчитано 2026-11-12"}
